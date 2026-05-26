@@ -1,250 +1,181 @@
 {
-  "personal": {
-    "name": "Akbarsha PR",
-    "title": "Software Developer",
-    "bio": "",
-    "email": "akbarshapr@gmail.com",
-    "resume": "/resume.pdf",
-    "socialLinks": [
-      {
-        "platform": "LinkedIn",
-        "url": "https://linkedin.com/in/akbarshapr",
-        "icon": ""
-      },
-      {
-        "platform": "GitHub",
-        "url": "https://github.com/akbarshapr",
-        "icon": ""
-      },
-      {
-        "platform": "Email",
-        "url": "mailto:akbarshapr@gmail.com",
-        "icon": ""
-      }
-    ]
-  },
-  "experiences": [
-    {
-      "id": "exp-1",
-      "company": "Tryzens Global",
-      "position": "Software Developer",
-      "location": "Trivandrum, Kerala",
-      "startDate": "2023-07",
-      "endDate": "Present",
-      "description": [
-        "Contributed to development, design and maintenance of Salesforce B2C Commerce (SFCC) functionalities, utilizing SFRA and Site Genesis for robust client-side and server-side solutions",
-        "Executed full-stack development using JavaScript, Node.js, HTML, and SCSS, delivering high-quality, production-ready code that minimized post-release defects",
-        "Developed and integrated key third-party systems to enhance customer experience and streamline backend processes",
-        "Contributed to development of SFCC jobs and services to facilitate seamless API integrations and OCAPI configurations",
-        "Achieved and delivered robust, high-quality integrations across critical MuleSoft project workflows, building expertise in advanced API development",
-        "Developed and contributed to specialized payment integration cartridge for key client payment processing",
-        "Partnered effectively with team members and project managers to ensure successful and on-time project sprint releases",
-        "Authored and maintained unit and integration tests using to ensure code reliability",
-        "Performed root cause analysis and resolved complex production defects under tight deadlines, maintaining system stability"
-      ],
-      "technologies": [],
-      "logo": "/images/companies/tryzens.png"
-    },
-    {
-      "id": "exp-2",
-      "company": "Luminar Technolab",
-      "position": "Software Developer Intern",
-      "location": "Kochi, Kerala",
-      "startDate": "2022-10",
-      "endDate": "2023-05",
-      "description": [
-        "Completed a full-stack development internship focusing on Python and the Django framework",
-        "Achieved the Python Web Development Expert certification from the National Council for Technology and Training",
-        "Developed a functional e-commerce platform and various foundational CRUD applications utilizing Django",
-        "Gained proficiency in Python, Django applying self directed learning to integrate emerging web development technologies"
-      ],
-      "technologies": [],
-      "logo": "/images/companies/luminar.png"
-    }
-  ],
-  "projects": [
-    {
-      "id": "proj-1",
-      "title": "Reads.com - Online Book Store",
-      "description": "Full-stack e-commerce platform with user profiles, PayPal payment gateway, and Open Library API integration",
-      "longDescription": "Developed a comprehensive e-commerce platform using Python/Django and MySQL, integrating key features like User Profiles, the PayPal Payment Gateway, and the Open Library API for book recommendations. Built with modern web development practices focusing on scalability and user experience.",
-      "image": "/images/projects/bookstore.jpg",
-      "demoUrl": "",
-      "githubUrl": "https://github.com/akbarshapr/reads-bookstore",
-      "featured": true,
-      "year": "2023"
-    },
-    {
-      "id": "proj-2",
-      "title": "To-Do Application",
-      "description": "Basic CRUD application with full Create, Read, Update, and Delete functionalities",
-      "longDescription": "Developed a fundamental To-Do application demonstrating complete CRUD operations with a clean, intuitive interface. This project showcases proficiency in full-stack development fundamentals and database management.",
-      "image": "/images/projects/todo.jpg",
-      "tags": ["JavaScript", "HTML", "CSS", "CRUD Operations"],
-      "demoUrl": "",
-      "githubUrl": "https://github.com/akbarshapr/todo-app",
-      "featured": true,
-      "year": "2023"
-    }
-  ],
-  "skills": [
-    {
-      "id": "skill-1",
-      "name": "JavaScript",
-      "category": "frontend"
-    },
-    {
-      "id": "skill-2",
-      "name": "TypeScript",
-      "category": "frontend"
-    },
-    {
-      "id": "skill-3",
-      "name": "ReactJS",
-      "category": "frontend"
-    },
-    {
-      "id": "skill-4",
-      "name": "HTML",
-      "category": "frontend"
-    },
-    {
-      "id": "skill-5",
-      "name": "CSS",
-      "category": "frontend"
-    },
-    {
-      "id": "skill-6",
-      "name": "SCSS",
-      "category": "frontend"
-    },
-    {
-      "id": "skill-7",
-      "name": "Node.js",
-      "category": "backend"
-    },
-    {
-      "id": "skill-8",
-      "name": "Python",
-      "category": "backend"
-    },
-    {
-      "id": "skill-9",
-      "name": "Django",
-      "category": "backend"
-    },
-    {
-      "id": "skill-10",
-      "name": "Salesforce Commerce Cloud",
-      "category": "backend"
-    },
-    {
-      "id": "skill-11",
-      "name": "MuleSoft",
-      "category": "backend"
-    },
-    {
-      "id": "skill-12",
-      "name": "RESTful APIs",
-      "category": "backend"
-    },
-    {
-      "id": "skill-13",
-      "name": "MySQL",
-      "category": "backend"
-    },
-    {
-      "id": "skill-14",
-      "name": "SQL",
-      "category": "backend"
-    },
-    {
-      "id": "skill-15",
-      "name": "JSON",
-      "category": "backend"
-    },
-    {
-      "id": "skill-16",
-      "name": "XML",
-      "category": "backend"
-    },
-    {
-      "id": "skill-17",
-      "name": "Git",
-      "category": "tools"
-    },
-    {
-      "id": "skill-18",
-      "name": "GitHub",
-      "category": "tools"
-    },
-    {
-      "id": "skill-19",
-      "name": "Bitbucket",
-      "category": "tools"
-    },
-    {
-      "id": "skill-20",
-      "name": "Postman",
-      "category": "tools"
-    },
-    {
-      "id": "skill-21",
-      "name": "Jira",
-      "category": "tools"
-    },
-    {
-      "id": "skill-22",
-      "name": "Confluence",
-      "category": "tools"
-    },
-    {
-      "id": "skill-23",
-      "name": "Figma",
-      "category": "design"
-    },
-    {
-      "id": "skill-24",
-      "name": "MuleSoft Anypoint Studio",
-      "category": "tools"
-    }
-  ],
-  "education": [
-    {
-      "id": "edu-1",
-      "institution": "Mahatma Gandhi University",
-      "degree": "Bachelor's in Computer Applications",
-      "location": "Affiliated to Ilahia College of Arts and Science, affiliated with MGU",
-      "startDate": "2019",
-      "endDate": "2022",
-      "description": ""
-    },
-    {
-      "id": "edu-2",
-      "institution": "Directorate of Higher Secondary Education",
-      "degree": "Higher Secondary Education",
-      "field": "Computer Science",
-      "location": "St. Ignatius Vocational & Higher Secondary School",
-      "startDate": "2017",
-      "endDate": "2019",
-      "description": ""
-    }
-  ],
-  "certifications": [
-    {
-      "id": "cert-1",
-      "name": "Salesforce Certified B2C Commerce Developer",
-      "issuer": "Salesforce",
-      "date": "2024",
-      "credentialUrl": ""
-    },
-    {
-      "id": "cert-2",
-      "name": "Python Web Development Expert",
-      "issuer": "National Council of Technology and Training",
-      "date": "2023",
-      "credentialUrl": ""
-    }
-  ],
-  "testimonials": []
+	"personal": {
+		"name": "Akbarsha PR",
+		"title": "Building modern web experiences",
+		"bio": "Turning ideas into interactive experiences with code, coffee, and questionable sleep schedules.",
+		"email": "akbarshapr@gmail.com",
+		"resume": "/resume.pdf",
+		"socialLinks": [
+			{
+				"platform": "LinkedIn",
+				"url": "https://linkedin.com/in/akbarshapr",
+				"icon": ""
+			},
+			{
+				"platform": "GitHub",
+				"url": "https://github.com/akbarshapr",
+				"icon": ""
+			},
+			{
+				"platform": "Email",
+				"url": "mailto:akbarshapr@gmail.com",
+				"icon": ""
+			}
+		]
+	},
+	"experiences": [
+		{
+			"company": "Tryzens Global",
+			"position": "Software Developer",
+			"location": "Trivandrum, Kerala",
+			"startDate": "2023",
+			"endDate": "Present",
+			"description": [
+				"Building commerce experiences and integrations across SFCC and MuleSoft projects.",
+				"Worked on APIs, payment integrations, and client-focused digital solutions.",
+				"Collaborated with teams to deliver reliable and scalable commerce features."
+			],
+			"logo": "/images/companies/tryzens.png"
+		},
+		{
+			"company": "Luminar Technolab",
+			"position": "Software Developer Intern",
+			"location": "Kochi, Kerala",
+			"startDate": "2022",
+			"endDate": "2023",
+			"description": [
+				"Built full-stack applications using Python and Django.",
+				"Strengthened fundamentals in backend development and web technologies."
+			],
+			"logo": "/images/companies/luminar.png"
+		}
+	],
+	"projects": [
+		{
+			"slug": "reads-bookstore",
+			"title": "Reads.com",
+			"description": "Online bookstore built with Django and integrated payment flows.",
+			"image": "/images/projects/bookstore.jpg",
+			"tags": [
+				"Python",
+				"Django",
+				"MySQL"
+			],
+			"githubUrl": "https://github.com/akbarshapr/reads-bookstore",
+			"featured": true
+		},
+		{
+			"slug": "task-manager",
+			"title": "Task Manager",
+			"description": "Minimal CRUD-based task management application.",
+			"image": "/images/projects/todo.jpg",
+			"tags": [
+				"JavaScript",
+				"HTML",
+				"CSS"
+			],
+			"githubUrl": "https://github.com/akbarshapr/todo-app",
+			"featured": true
+		}
+	],
+	"skills": [
+		{
+			"name": "JavaScript",
+			"highlight": true
+		},
+		{
+			"name": "TypeScript",
+			"highlight": true
+		},
+		{
+			"name": "React",
+			"highlight": true
+		},
+		{
+			"name": "Next.js",
+			"highlight": true
+		},
+		{
+			"name": "HTML",
+			"highlight": false
+		},
+		{
+			"name": "CSS",
+			"highlight": false
+		},
+		{
+			"name": "SCSS",
+			"highlight": false
+		},
+		{
+			"name": "Node.js",
+			"highlight": true
+		},
+		{
+			"name": "Python",
+			"highlight": true
+		},
+		{
+			"name": "Django",
+			"highlight": false
+		},
+		{
+			"name": "Salesforce Commerce Cloud",
+			"highlight": true
+		},
+		{
+			"name": "MuleSoft",
+			"highlight": true
+		},
+		{
+			"name": "SQL",
+			"highlight": false
+		},
+		{
+			"name": "Git",
+			"highlight": true
+		},
+		{
+			"name": "Figma",
+			"highlight": false
+		}
+	],
+	"education": [
+		{
+			"institution": "Mahatma Gandhi University",
+			"degree": "Bachelor's in Computer Applications",
+			"startDate": "2019",
+			"endDate": "2022",
+			"location": "Kerala"
+		},
+		{
+			"institution": "Directorate of Higher Secondary Education",
+			"degree": "Higher Secondary Education",
+			"startDate": "2017",
+			"endDate": "2019",
+			"location": "Kerala"
+		}
+	],
+	"certifications": [
+		{
+			"name": "Salesforce Certified MuleSoft Developer",
+			"issuer": "Salesforce",
+			"url": ""
+		},
+		{
+			"name": "Salesforce Certified B2C Commerce Developer",
+			"issuer": "Salesforce",
+			"url": ""
+		},
+		{
+			"name": "Salesforce Certified Agentforce Specialist",
+			"issuer": "Salesforce",
+			"url": ""
+		},
+		{
+			"name": "Python Web Development Expert",
+			"issuer": "National Council of Technology and Training",
+			"url": ""
+		}
+	]
 }
