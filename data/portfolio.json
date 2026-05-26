@@ -1,0 +1,181 @@
+{
+	"personal": {
+		"name": "Akbarsha PR",
+		"title": "Building modern web experiences",
+		"bio": "Turning ideas into interactive experiences with code, coffee, and questionable sleep schedules.",
+		"email": "akbarshapr@gmail.com",
+		"resume": "/resume.pdf",
+		"socialLinks": [
+			{
+				"platform": "LinkedIn",
+				"url": "https://linkedin.com/in/akbarshapr",
+				"icon": ""
+			},
+			{
+				"platform": "GitHub",
+				"url": "https://github.com/akbarshapr",
+				"icon": ""
+			},
+			{
+				"platform": "Email",
+				"url": "mailto:akbarshapr@gmail.com",
+				"icon": ""
+			}
+		]
+	},
+	"experiences": [
+		{
+			"company": "Tryzens Global",
+			"position": "Software Developer",
+			"location": "Trivandrum, Kerala",
+			"startDate": "2023",
+			"endDate": "Present",
+			"description": [
+				"Building commerce experiences and integrations across SFCC and MuleSoft projects.",
+				"Worked on APIs, payment integrations, and client-focused digital solutions.",
+				"Collaborated with teams to deliver reliable and scalable commerce features."
+			],
+			"logo": "/images/companies/tryzens.png"
+		},
+		{
+			"company": "Luminar Technolab",
+			"position": "Software Developer Intern",
+			"location": "Kochi, Kerala",
+			"startDate": "2022",
+			"endDate": "2023",
+			"description": [
+				"Built full-stack applications using Python and Django.",
+				"Strengthened fundamentals in backend development and web technologies."
+			],
+			"logo": "/images/companies/luminar.png"
+		}
+	],
+	"projects": [
+		{
+			"slug": "reads-bookstore",
+			"title": "Reads.com",
+			"description": "Online bookstore built with Django and integrated payment flows.",
+			"image": "/images/projects/bookstore.jpg",
+			"tags": [
+				"Python",
+				"Django",
+				"MySQL"
+			],
+			"githubUrl": "https://github.com/akbarshapr/reads-bookstore",
+			"featured": true
+		},
+		{
+			"slug": "task-manager",
+			"title": "Task Manager",
+			"description": "Minimal CRUD-based task management application.",
+			"image": "/images/projects/todo.jpg",
+			"tags": [
+				"JavaScript",
+				"HTML",
+				"CSS"
+			],
+			"githubUrl": "https://github.com/akbarshapr/todo-app",
+			"featured": true
+		}
+	],
+	"skills": [
+		{
+			"name": "JavaScript",
+			"highlight": true
+		},
+		{
+			"name": "TypeScript",
+			"highlight": true
+		},
+		{
+			"name": "React",
+			"highlight": true
+		},
+		{
+			"name": "Next.js",
+			"highlight": true
+		},
+		{
+			"name": "HTML",
+			"highlight": false
+		},
+		{
+			"name": "CSS",
+			"highlight": false
+		},
+		{
+			"name": "SCSS",
+			"highlight": false
+		},
+		{
+			"name": "Node.js",
+			"highlight": true
+		},
+		{
+			"name": "Python",
+			"highlight": true
+		},
+		{
+			"name": "Django",
+			"highlight": false
+		},
+		{
+			"name": "Salesforce Commerce Cloud",
+			"highlight": true
+		},
+		{
+			"name": "MuleSoft",
+			"highlight": true
+		},
+		{
+			"name": "SQL",
+			"highlight": false
+		},
+		{
+			"name": "Git",
+			"highlight": true
+		},
+		{
+			"name": "Figma",
+			"highlight": false
+		}
+	],
+	"education": [
+		{
+			"institution": "Mahatma Gandhi University",
+			"degree": "Bachelor's in Computer Applications",
+			"startDate": "2019",
+			"endDate": "2022",
+			"location": "Kerala"
+		},
+		{
+			"institution": "Directorate of Higher Secondary Education",
+			"degree": "Higher Secondary Education",
+			"startDate": "2017",
+			"endDate": "2019",
+			"location": "Kerala"
+		}
+	],
+	"certifications": [
+		{
+			"name": "Salesforce Certified MuleSoft Developer",
+			"issuer": "Salesforce",
+			"url": ""
+		},
+		{
+			"name": "Salesforce Certified B2C Commerce Developer",
+			"issuer": "Salesforce",
+			"url": ""
+		},
+		{
+			"name": "Salesforce Certified Agentforce Specialist",
+			"issuer": "Salesforce",
+			"url": ""
+		},
+		{
+			"name": "Python Web Development Expert",
+			"issuer": "National Council of Technology and Training",
+			"url": ""
+		}
+	]
+}
