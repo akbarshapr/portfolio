@@ -1,0 +1,7 @@
+# Akbar Sha
+
+> Portfolio of Akbar Sha — a software developer specialising in Salesforce B2C Commerce (SFCC/SFRA), MuleSoft integrations, and React, building and connecting enterprise commerce systems.
+
+## Pages
+
+- [Home](/): About, skills, selected work, experience, education, certifications, results, and contact for Akbar Sha.

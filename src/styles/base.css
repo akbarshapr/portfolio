@@ -1,0 +1,44 @@
+/* Element defaults. If a rule could live on a component, put it there instead. */
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* The ONLY anchor offset. Sections carry no scroll-margin — the two add up. */
+    scroll-padding-top: var(--header-height);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    /* Mono is the body voice, and it is the system's — nothing is downloaded. */
+    font-family: var(--font-mono);
+    font-size: var(--text-prose);
+    line-height: var(--text-prose--line-height);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* var(--accent), not var(--color-accent) — see the note in utilities.css. */
+  ::selection {
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+  }
+
+  /* Reaches CSS animations only — SMIL and JS motion each need their own check. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}

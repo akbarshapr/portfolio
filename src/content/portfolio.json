@@ -1,0 +1,181 @@
+{
+  "name": "Akbar Sha",
+  "title": "Software Developer",
+  "intro": "As a software developer, I build solutions that solve complex problems, connects systems, and turn designs into working products. I enjoy what I do and the challenges that come with it.",
+  "email": "akbarshapr@gmail.com",
+  "avatar": "/avatar.jpg",
+  "portrait": "/portrait-placeholder.svg",
+  "social": {
+    "github": "https://github.com/akbarshapr",
+    "linkedin": "https://www.linkedin.com/in/akbarshapr",
+    "email": "mailto:akbarshapr@gmail.com"
+  },
+  "handles": {
+    "github": "@akbarshapr",
+    "linkedin": "in/akbarshapr"
+  },
+  "currentlyInto": [
+    "Watching films",
+    "Catching up on anime",
+    "Playing football",
+    "Building with React and Next.js",
+    "Spending time with friends and family"
+  ],
+  "about": [
+    "I am a software developer at Tryzens Global, working primarily across Salesforce B2C Commerce and MuleSoft integrations. Over the past three years, I have worked with three enterprise clients and 5–6 storefronts, building everything from storefront features and checkout flows to payment and third-party integrations.",
+    "Before that, I started out as a full-stack intern working with Python and Django, where I built my first applications end to end. Since then, I have earned Salesforce certifications in B2C Commerce, MuleSoft, and Agentforce, and gradually found myself drawn towards the work I enjoy most: integrations, payment flows, and solving the small technical details that make a system reliable in production.",
+    "Outside of work, I am usually watching a film, catching up on anime, playing football, or spending time with friends and family. I also enjoy building things with React and Next.js when I have an idea I want to bring to life."
+  ],
+  "skills": [
+    {
+      "category": "Platforms",
+      "items": ["Salesforce B2C Commerce", "MuleSoft"]
+    },
+    {
+      "category": "Languages",
+      "items": ["JavaScript", "TypeScript", "Python", "HTML", "CSS", "SCSS"]
+    },
+    {
+      "category": "Frameworks & Libraries",
+      "items": ["React", "Next.js", "Node.js", "Django", "Bootstrap"]
+    },
+    {
+      "category": "APIs & Integration",
+      "items": ["Anypoint Platform", "REST APIs", "SOAP APIs", "API Design"]
+    },
+    {
+      "category": "Tools & Practice",
+      "items": ["Git", "Postman", "SQL", "Agile / Scrum"]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Loyalty & Engagement Integration",
+      "description": "Integrated Antavo Loyalty and Braze with SFCC storefronts, connecting customer and commerce events with loyalty rewards and personalised marketing journeys.",
+      "tech": ["SFCC", "SFRA", "Antavo", "Braze", "REST APIs"],
+      "challenge": "Loyalty and marketing platforms lived outside the storefront, so customer engagement had to stay in sync with commerce events across multiple client sites."
+    },
+    {
+      "title": "Payment Integration Cartridges",
+      "description": "Developed cartridges supporting multiple payment providers across production commerce environments, with a focus on secure transaction processing and reliable checkout flows.",
+      "tech": ["SFCC", "SFRA", "JavaScript", "REST APIs"],
+      "challenge": "Each payment provider came with its own API contract, behaviour, and failure scenarios, all of which had to work reliably within a live checkout experience."
+    },
+    {
+      "title": "MuleSoft OMS Integration Suite",
+      "description": "Built three to four major MuleSoft integrations connecting order management across Adobe Commerce, NewStore, AP21, 3PL, Edicom, and Avalara — covering workflows from order capture through fulfilment and tax.",
+      "tech": ["MuleSoft Anypoint", "REST APIs", "SOAP APIs", "Adobe Commerce", "NewStore"],
+      "challenge": "Multiple systems with different contracts and responsibilities had to work together around a consistent order lifecycle and continue performing reliably after launch."
+    }
+  ],
+  "experience": [
+    {
+      "role": "Software Developer",
+      "company": "Tryzens Global",
+      "period": "July 2023 — Present",
+      "contributions": [
+        "Designed and delivered SFCC SFRA solutions across 3 enterprise clients and 5–6 storefronts, covering product pages, promotions, checkout flows, and payment integrations.",
+        "Integrated Antavo Loyalty and Braze marketing platforms into SFCC storefronts, enabling personalised engagement and loyalty reward flows.",
+        "Developed secure payment integration cartridges supporting multiple providers, with transaction processing designed to meet PCI requirements in production.",
+        "Architected and implemented 3–4 major MuleSoft integration builds for OMS workflows across Adobe Commerce, NewStore, AP21, 3PL, Edicom, and Avalara.",
+        "Configured and maintained SFCC jobs, services, and OCAPI endpoints to automate business processes and connect third-party systems.",
+        "Built and maintained React components for eCommerce front-ends, matching client design specifications across sprint cycles."
+      ],
+      "tech": ["SFCC", "SFRA", "MuleSoft", "JavaScript", "React", "Node.js", "OCAPI"]
+    },
+    {
+      "role": "Software Developer Intern",
+      "company": "Luminar Technolab",
+      "period": "Oct 2022 — May 2023",
+      "contributions": [
+        "Completed a full-stack internship focused on Python and Django, building an e-commerce application and several CRUD web applications.",
+        "Earned the Python Web Development Expert certification from the National Council for Technology and Training through project-based learning."
+      ],
+      "tech": ["Python", "Django", "SQL", "HTML", "CSS"]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Ilahia College of Arts and Science",
+      "credential": "Bachelor of Computer Applications",
+      "status": "2019 — 2022",
+      "highlights": ["Affiliated with Mahatma Gandhi University."],
+      "location": "Muvattupuzha, Ernakulam, Kerala"
+    }
+  ],
+  "certs": [
+    {
+      "name": "Salesforce Certified B2C Commerce Developer",
+      "issuer": "Salesforce"
+    },
+    {
+      "name": "Salesforce Certified MuleSoft Developer",
+      "issuer": "Salesforce"
+    },
+    {
+      "name": "Salesforce Certified Agentforce Specialist",
+      "issuer": "Salesforce"
+    },
+    {
+      "name": "Python Web Development Expert",
+      "issuer": "National Council for Technology and Training"
+    }
+  ],
+  "wins": [
+    {
+      "category": "Delivery",
+      "metric": "<5%",
+      "label": "Post-release defect rate",
+      "body": "Maintained across sprints and client engagements covering product pages, promotions, checkout flows, and payment integrations."
+    },
+    {
+      "category": "Scale",
+      "metric": "5–6",
+      "label": "Storefronts delivered",
+      "body": "SFCC SFRA solutions designed and delivered across three enterprise clients."
+    },
+    {
+      "category": "Integration",
+      "metric": "3–4",
+      "label": "MuleSoft OMS builds",
+      "body": "Major integration builds connecting Adobe Commerce, NewStore, AP21, 3PL, Edicom, and Avalara across end-to-end order management workflows."
+    }
+  ],
+  "stats": [
+    {
+      "value": "3+",
+      "label": "Years shipping"
+    },
+    {
+      "value": "3",
+      "label": "Enterprise clients"
+    },
+    {
+      "value": "5–6",
+      "label": "Storefronts"
+    },
+    {
+      "value": "4",
+      "label": "Certifications"
+    }
+  ],
+  "worklog": [],
+  "beyond": [
+    {
+      "title": "Films",
+      "body": "I watch a lot of films — anything from big-screen blockbusters to something completely unexpected. It is probably my favourite way to switch off after work."
+    },
+    {
+      "title": "Anime",
+      "body": "I have always enjoyed long-form stories, and anime has more than enough of them. There is usually something new on my watchlist."
+    },
+    {
+      "title": "Football",
+      "body": "Playing football is my favourite excuse to step away from a screen and spend a few hours doing something completely different."
+    },
+    {
+      "title": "Friends & Family",
+      "body": "Outside of work and hobbies, most of my best time is spent with friends and family. Sometimes the best way to solve a problem is to stop thinking about it for a while."
+    }
+  ]
+}

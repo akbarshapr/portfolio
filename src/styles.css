@@ -1,0 +1,14 @@
+/*
+ * Stylesheet entry point. @import rules must come first in a CSS file, so this
+ * order is fixed. `source(none)` turns off Tailwind's auto content detection;
+ * `@source` then scans src/ explicitly.
+ */
+@import "tailwindcss" source(none);
+@import "tw-animate-css";
+@import "./styles/tokens.css";
+@import "./styles/base.css";
+@import "./styles/utilities.css";
+
+@source "../src";
+
+@custom-variant dark (&:is(.dark *));

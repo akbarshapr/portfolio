@@ -1,0 +1,20 @@
+<!--
+  The same five paths as src/components/portfolio/diagram.tsx, with the palette
+  hardcoded: a favicon has no CSS context, so currentColor would resolve to the
+  browser default rather than ours. #0061d8 is --accent; if that token changes,
+  change this file with it.
+
+  Only one thing differs from the component, and only so the mark survives 16px:
+  stroke-width 2 rather than 1.5. The 24-unit artwork is inset into the 32-unit
+  tile with translate(4 4).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <rect width="32" height="32" rx="7" fill="#0061d8"/>
+  <g transform="translate(4 4)" fill="none" stroke="#f8f8f8" stroke-width="2" stroke-linecap="round">
+    <path d="M3.2 5.3Q12 6.7 20.8 5.3"/>
+    <path d="M5.8 10H18.2"/>
+    <path d="M12 6.3V10"/>
+    <path d="M7.5 6.1L6.5 20.9"/>
+    <path d="M16.5 6.1L17.5 20.9"/>
+  </g>
+</svg>
