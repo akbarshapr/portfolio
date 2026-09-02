@@ -1,23 +1,13 @@
 import { cn } from "@/lib/utils";
 
-/**
- * The tech line under a project or an experience entry.
- *
- * Dot-separated plain text rather than bordered chips: the reference design
- * carries no filled or outlined pills anywhere, and a list of twenty of them
- * was most of what made the old page feel busy.
- */
+/** The tech line under a project or experience entry. Dot-separated, no chips. */
 export function TechTags({ items, className }: { items: string[]; className?: string }) {
   if (items.length === 0) return null;
 
   return <p className={cn("text-micro text-muted-foreground", className)}>{items.join(" · ")}</p>;
 }
 
-/**
- * The dash-marked list used for contributions and course highlights. The marker
- * is decorative, so it is hidden from assistive tech and the list reads as
- * plain items.
- */
+/** The dash-marked list used for contributions and highlights. */
 export function Bullets({ items, className }: { items: string[]; className?: string }) {
   if (items.length === 0) return null;
 

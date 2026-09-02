@@ -1,14 +1,6 @@
-import { Section } from "./section";
 import { portfolio } from "@/lib/portfolio";
+import { Section } from "./section";
 
-/**
- * A label column and a dot-separated list, nothing else.
- *
- * The lucide glyph beside each skill went with the cards — the reference
- * carries no iconography at all, and twenty icons in a column this narrow read
- * as clutter rather than as logos. The mapping is recoverable from git if it
- * is ever wanted back.
- */
 export function Skills() {
   if (portfolio.skills.length === 0) return null;
 

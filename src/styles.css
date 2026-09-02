@@ -1,7 +1,7 @@
 /*
- * Stylesheet entry point. @import rules must come first in a CSS file, so this
- * order is fixed. `source(none)` turns off Tailwind's auto content detection;
- * `@source` then scans src/ explicitly.
+ * Stylesheet entry point. @import rules must come first, so this order is
+ * fixed. `source(none)` turns off auto content detection; `@source` then scans
+ * src/ explicitly, relative to THIS file — moving it changes what Tailwind sees.
  */
 @import "tailwindcss" source(none);
 @import "tw-animate-css";

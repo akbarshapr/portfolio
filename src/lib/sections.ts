@@ -1,26 +1,16 @@
 import type { CSSProperties } from "react";
+
 import { portfolio } from "@/lib/portfolio";
 
 /**
- * The page's section registry — the single source of truth for what renders,
- * what the nav links to, and what number each section carries on the rail.
+ * The section registry — one source of truth for what renders, what the nav
+ * links to, which rail number a section carries, and which accent it uses.
  *
- * `id` is the anchor target and must match the `id` a section passes to
- * `<Section>`. `label` is plain English and deliberately differs from the id in
- * two places (Projects lives at #work, Worklog reads as "Notes").
- *
- * `show` keeps the three in step: a section with no data renders nothing, so it
- * gets no nav link and no rail number, and the numbering closes up rather than
- * skipping. Fill the array in portfolio.json and all three appear together.
- *
- * `inNav` is narrower — it hides a link without hiding the section. The header
- * carries four links; everything else is still on the page, still numbered on
- * the rail, and still reachable by scrolling. Do NOT use `inNav: false` to hide
- * a section; that is what an empty array in portfolio.json is for.
- *
- * `tone` picks which of the two accents the section carries. The page opens
- * cool and closes warm; the boundary is wherever "warm" first appears below, so
- * moving it is a one-word edit. See sectionToneStyle for how it is applied.
+ * `id` is the anchor target and must match what the section passes to
+ * `<Section>`. `show` is derived from the data, so an empty array in
+ * portfolio.json drops the section, its link and its number together, and the
+ * numbering closes up. `inNav` only hides a link — never use it to hide a
+ * section. The first `tone: "warm"` entry is where the page turns.
  */
 type SectionMeta = {
   id: string;
@@ -69,14 +59,10 @@ const ALL: SectionMeta[] = [
 ];
 
 /**
- * Rebinding --accent, rather than swapping a class, is what makes the warm half
- * work: every text-accent / border-accent / stroke-accent inside the section
- * resolves var(--accent) at the element, so a single declaration on the
- * <section> recolours headings, list markers, metrics and hover states at once.
- *
- * This only holds because the custom utilities in styles/utilities.css read
- * var(--accent) too — var(--color-accent) resolves on :root and would not
- * follow. Returns undefined for a cool section so React writes no style at all.
+ * Rebinding --accent on the <section> recolours everything inside at once,
+ * because Tailwind's accent utilities resolve var(--accent) at the element.
+ * The custom utilities must read var(--accent) too — var(--color-accent)
+ * resolves on :root and would not follow.
  */
 const WARM = { "--accent": "var(--accent-warm)" } as CSSProperties;
 

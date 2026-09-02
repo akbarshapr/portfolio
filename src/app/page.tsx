@@ -35,9 +35,8 @@ export const metadata: Metadata = {
   },
 };
 
-// One @graph rather than two <script> tags: same statements, one parse, and the
-// Person/WebSite nodes can reference each other. `sameAs` is derived from the
-// social links so the two can't drift.
+// One @graph rather than two <script> tags, so the nodes can reference each
+// other. `sameAs` is derived from the social links so the two can't drift.
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
@@ -92,8 +91,8 @@ export default function Home() {
         <Contact />
       </main>
 
-      {/* Renders nothing: one IntersectionObserver that reveals each section as
-          it arrives. Everything above stays a Server Component. */}
+      {/* Renders nothing: one IntersectionObserver reveals each section as it
+          arrives. Everything above stays a Server Component. */}
       <Reveal />
     </div>
   );

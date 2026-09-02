@@ -1,10 +1,8 @@
 /*
- * Design tokens — the only file allowed to hold a raw value.
+ * Design tokens — the only file that holds a raw value.
  *
- * The palette is deliberately tiny: background, foreground, muted, two
- * accents, border. There is no card or popover colour, because the page has no
- * cards. Adding a colour means THREE edits — :root, .dark, and @theme inline —
- * or it silently keeps its light value in dark mode.
+ * Adding a colour means THREE edits: :root, .dark, and @theme inline. Miss one
+ * and it silently keeps its light value in dark mode.
  */
 
 @theme inline {
@@ -12,54 +10,35 @@
   --radius-md: var(--radius);
   --radius-lg: calc(var(--radius) + 2px);
 
-  /* Page width. 48rem = 768px, matching the reference's max-w-3xl. */
+  /* 48rem = 768px. */
   --container-page: 48rem;
 
   /*
-   * The measure for running copy, as `max-w-measure`.
-   *
-   * NOT `max-w-prose`. Tailwind v4 ships that as a static 65ch utility rather
-   * than a --container-* entry, and it merges an @utility override INTO its own
-   * rule with its 65ch last — so the built-in cannot be beaten by name. A
-   * separate name is generated from this scale and simply wins on its own.
-   *
-   * 80ch is wider than the rail's content column at --container-page, so today
-   * it reads as "fill the column" and only starts binding if the page widens.
+   * The measure for running copy, as `max-w-measure`. NOT max-w-prose:
+   * Tailwind v4 ships that as a static 65ch rule and merges an @utility
+   * override into it with its own value last, so the built-in cannot be beaten
+   * by name.
    */
   --container-measure: 80ch;
 
-  /*
-   * Two families. Mono is the body voice and comes from the system — no
-   * webfont, no download, no render-blocking request. DM Serif Text is the
-   * ONLY downloaded face; it is what keeps the page from reading as a terminal.
-   * next/font self-hosts it and hands it over as --font-dm-serif, which is set
-   * on <html> in app/layout.tsx — hence the var() below rather than a name.
-   */
+  /* Mono is the body voice and comes from the system. The other two are
+     self-hosted by next/font, which defines these vars on <html> — hence the
+     var() rather than a family name, since the generated names are not stable. */
   --font-mono:
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New",
     monospace;
   --font-serif: var(--font-dm-serif), ui-serif, Georgia, serif;
-
-  /*
-   * The third voice, and it speaks ONE word: the hero name. Space Grotesk 700,
-   * self-hosted by next/font (see app/layout.tsx). The system sans behind it is
-   * a real fallback, not decoration — drop the download and the name still
-   * reads as a bold sans rather than collapsing into the mono body.
-   */
   --font-display:
     var(--font-space-grotesk), ui-sans-serif, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
 
-  /*
-   * Fixed sizes, one value each. Small on purpose: 14px body, 32px at the very
-   * top. px in the comment, rem in the value (px ÷ 16).
-   */
+  /* Seven fixed steps, px in the comment and rem in the value. */
   --text-nano: 0.6875rem; /* 11px — rail numbers */
   --text-nano--line-height: 1.4;
 
   --text-micro: 0.75rem; /* 12px — uppercase labels, dates, nav */
   --text-micro--line-height: 1.5;
 
-  --text-prose: 0.875rem; /* 14px — body copy. The `body` default. */
+  --text-prose: 0.875rem; /* 14px — body copy, the `body` default */
   --text-prose--line-height: 1.6;
 
   --text-lead: 1rem; /* 16px — entry titles */
@@ -76,8 +55,7 @@
 
   --tracking-label: 0.12em;
   --tracking-caption: 0.16em;
-  /* Negative, and only at --text-display: a bold sans set large looks loose at
-     its default spacing. Do not reuse it on body copy. */
+  /* Belongs to --text-display alone. Do not reuse on body copy. */
   --tracking-display: -0.02em;
 
   --color-background: var(--background);
@@ -86,13 +64,8 @@
   --color-secondary: var(--secondary);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
-
-  /*
-   * The second accent. Cobalt opens the page and the red closes it — sections
-   * declare which they carry via `tone` in lib/sections.ts, which REBINDS
-   * --accent on the section element. Everything inside then follows without
-   * knowing about it, so this utility is only needed for a one-off span.
-   */
+  /* Sections rebind --accent to this via `tone` in lib/sections.ts, so the
+     utility itself is only needed for a one-off span. */
   --color-accent-warm: var(--accent-warm);
   --color-border: var(--border);
   --color-ring: var(--ring);
@@ -103,32 +76,22 @@
 
   --radius: 0.25rem;
 
-  /*
-   * Breathing room above an #anchor target. The header does not stick — it
-   * scrolls away like the reference's — so this is no longer a header height,
-   * but scroll-padding-top still reads it and it is still the ONLY offset.
-   */
+  /* Scroll-padding above an anchor target, not a header height — the header
+     does not stick. */
   --header-height: 2rem;
 
-  /*
-   * Rail geometry. --page-pad MUST match the padding rail-grid applies: the
-   * hairline sits at page-pad + rail-width / 2, the centre of the rail column.
-   */
+  /* --page-pad MUST match the padding rail-grid applies: the hairline sits at
+     page-pad + rail-width / 2, the centre of the rail column. */
   --page-pad: 1rem;
   --rail-width: 2rem;
   --rail-gap: 1rem;
 
-  /* Near-white at zero chroma — a neutral sheet, not warm paper. */
   --background: oklch(0.98 0 0);
   --foreground: oklch(0.27 0.0096 235);
   --muted-foreground: oklch(0.45 0.03 257);
   --secondary: oklch(0.94 0.002 250);
 
-  /*
-   * Two accents at matched lightness and chroma, ~234° apart in hue, so neither
-   * outweighs the other where they meet. Cobalt is the page's voice; the red is
-   * a proper red at hue 24, deliberately short of the orange it replaced.
-   */
+  /* Two accents at matched lightness and chroma, ~234° apart in hue. */
   --accent: oklch(0.52 0.2 258);
   --accent-warm: oklch(0.53 0.19 24);
   --accent-foreground: oklch(0.98 0 0);
@@ -139,11 +102,9 @@
 .dark {
   color-scheme: dark;
 
-  /*
-   * Keep chroma at or below ~0.006 — a hue tint at even 0.009 turns a full
-   * viewport visibly coloured. If you darken --background, raise --border with
-   * it or the hairlines disappear.
-   */
+  /* Keep chroma at or below ~0.006 — a full viewport shows a tint a swatch
+     hides. If you darken --background, raise --border with it or the hairlines
+     disappear, and the rail IS hairlines. */
   --background: oklch(0.2364 0.0045 248);
   --foreground: oklch(0.8354 0 264);
   --muted-foreground: oklch(0.707 0.022 261);

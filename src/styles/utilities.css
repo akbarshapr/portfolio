@@ -1,16 +1,15 @@
 /*
- * Custom utilities. Each exists because the pattern repeats across at least two
- * components; a one-off belongs inline on the element.
+ * Custom utilities. A pattern earns a place here once a second component wants
+ * it; a one-off belongs inline on the element.
  *
- * font-serif OVERRIDES Tailwind's generated utility so the ligature settings
- * travel with the family.
- *
- * Anything accent-coloured in here reads var(--accent), NOT var(--color-accent).
- * The two are not interchangeable: --color-accent resolves once on :root, so a
- * section that rebinds --accent (see `tone` in lib/sections.ts) would not reach
- * it. Tailwind's own generated utilities already compile to var(--accent).
+ * Anything accent-coloured reads var(--accent), NOT var(--color-accent). The
+ * two are not interchangeable: --color-accent resolves once on :root, so a
+ * section that rebinds --accent (see `tone` in lib/sections.ts) would not
+ * reach it.
  */
 
+/* Overrides Tailwind's generated utility so the ligature settings travel with
+   the family. */
 @utility font-serif {
   font-family: var(--font-serif);
   font-feature-settings: "liga", "dlig";
@@ -58,10 +57,8 @@
   gap: var(--rail-gap);
 }
 
-/*
- * Absolutely positioned, so it is not a grid item. inset-block: 0 spans the
- * whole section, which is what joins consecutive sections into one line.
- */
+/* Absolutely positioned, so it is not a grid item. inset-block: 0 spans the
+   whole section, which is what joins consecutive sections into one line. */
 @utility rail-line {
   position: absolute;
   inset-block: 0;
@@ -83,11 +80,8 @@
   }
 }
 
-/*
- * The page's only hover treatment. Nothing lifts or casts a shadow — with no
- * cards to lift there is nothing to raise, so hover is a colour change and an
- * underline offset, matching the reference's `.cactus-link`.
- */
+/* The page's only hover treatment: a colour change and a border tint. Nothing
+   lifts or casts a shadow — with no cards there is nothing to raise. */
 @utility hover-accent {
   transition:
     color 0.18s ease,
@@ -100,18 +94,13 @@
 }
 
 /*
- * The theme crossfade. components/theme-toggle.tsx puts this on <html> for
- * ~400ms around the `.dark` flip, so the palette eases across instead of
- * cutting. It is a class rather than a standing rule on `*` precisely because a
- * permanent transition would also drag every hover and focus change through it.
+ * The theme crossfade, applied to <html> for ~400ms around the .dark flip.
+ * A class rather than a standing rule on `*`, which would drag every hover
+ * through it too.
  *
- * Specificity is doing the work, not !important: `.theme-switching *` is
- * (0,1,1) and beats hover-accent's own transition at (0,1,0) inside the same
- * utilities layer, so links crossfade with everything else rather than snapping.
- *
- * Reduced motion is already covered — the block in base.css collapses
- * transition-duration with !important, and an important declaration in an
- * earlier cascade layer outranks a later one.
+ * Specificity does the work, not !important: `.theme-switching *` (0,1,1)
+ * beats hover-accent's own transition (0,1,0) in the same layer. Reduced motion
+ * is already covered by base.css.
  */
 @utility theme-switching {
   &,
@@ -128,40 +117,24 @@
 }
 
 /* ---------------------------------------------------------------------------
- * The intro
+ * The intro — the mark strokes itself in, the rail descends out of it, and the
+ * hero's lines arrive underneath. ~1.3s, no JavaScript.
  *
- * The page assembles itself instead of hiding behind a splash. This is a static
- * export — nothing is genuinely loading — so a spinner or a progress count
- * would be theatre, and a full-screen greeting is precisely the character the
- * Cactus pass removed. What runs instead is one gesture built from the two
- * motifs the page already owns: the gateway strokes itself in, the rail
- * descends out of it, and the hero's lines arrive underneath.
- *
- * Three rules hold it up, and breaking any of them costs more than the
- * animation is worth.
+ * Two rules hold it up:
  *
  * 1. THE START STATE LIVES INSIDE THE KEYFRAME, never on the element. Every
- *    animation here declares only `from`, and `animation-fill-mode: backwards`
- *    holds that frame through the delay. So if this stylesheet fails to arrive,
- *    nothing has been set to opacity 0 and the page renders plainly rather than
- *    invisibly. Never lift these into a base rule "to be explicit" — that is
- *    the edit that turns a slow network into a blank page.
- * 2. ONLY opacity, transform and stroke-dashoffset animate. All three are
- *    compositor-only: no layout is read or written, every element occupies its
- *    final box from the first frame, and the text is in the HTML throughout —
- *    so a crawler's view is unaffected and LCP moves only by the hero's delay.
- * 3. NO JAVASCRIPT. Nothing mounts late and nothing is deferred; this is only
- *    how finished markup is revealed. It costs zero bytes of script and leaves
- *    the two-of-eighteen client component split exactly where it was.
+ *    animation declares only `from`, and `animation-fill-mode: backwards` holds
+ *    that frame through the delay — so a stylesheet that fails to arrive yields
+ *    a plain page rather than a blank one. Never lift these into a base rule.
+ * 2. Only opacity, transform and stroke-dashoffset animate, all
+ *    compositor-only, so no layout is read or written and the text is in the
+ *    HTML throughout.
  *
- * The timings overlap on purpose — header 0s, mark 0.22s, rail 0.38s, hero
- * 0.45s. A strictly sequential version reads as a machine taking its turns; the
- * overlap is what makes it read as a single movement. Total run is ~1.3s.
- *
- * The reduced-motion block in base.css collapses durations AND delays. Both are
- * required: leave the delays alone and a reader who asked for stillness gets a
- * blank page for the length of the longest one instead of a still page.
- */
+ * Timings overlap on purpose — header 0s, mark 0.22s, rail 0.38s, hero 0.45s.
+ * Sequential reads as a machine taking turns; the overlap makes it one
+ * movement. The reduced-motion block in base.css collapses delays as well as
+ * durations, and both are required.
+ * ------------------------------------------------------------------------- */
 
 @keyframes intro-rise {
   from {
@@ -182,10 +155,8 @@
   }
 }
 
-/*
- * One offset draws every stroke whatever its real length, because the paths
- * carry pathLength="1" — see the note in diagram.tsx.
- */
+/* One offset draws every stroke whatever its real length, because the paths
+   carry pathLength="1" — see diagram.tsx. */
 @keyframes intro-draw {
   from {
     stroke-dashoffset: 1;
@@ -197,11 +168,8 @@
   animation: intro-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;
 }
 
-/*
- * The gateway builds from the ground up — uprights, then the tie beam, the
- * strut, and the lintel landing last. The delays therefore run against source
- * order, which lists the mark top-down.
- */
+/* The gateway builds from the ground up, so the delays run against source
+   order, which lists the mark top-down. */
 @utility intro-mark {
   & path {
     stroke-dasharray: 1;
@@ -230,33 +198,22 @@
   }
 }
 
-/*
- * The hairline running down out of the mark. ONLY the hero's line carries this.
- * Every section's line would animate identically, but the rest are far below
- * the fold while it plays, so animating them is motion nobody sees.
- */
+/* ONLY the hero's line carries this — every other section is below the fold
+   while it plays. */
 @utility intro-rail {
   transform-origin: top;
   animation: intro-descend 0.7s cubic-bezier(0.65, 0, 0.35, 1) 0.38s backwards;
 }
 
-/*
- * The node on the rail, timed to land just after the descending line has run
- * past it. Without this it is the one element with nothing to attach to — a
- * lone circle sitting in empty space for the whole 0.38s before the line
- * arrives, which reads as a rendering fault rather than as a pause. It fades
- * rather than rises: the node is centred on the hairline, and a translate on a
- * 8px circle only draws attention to it coming back into place.
- */
+/* Timed to land just after the descending line passes it; without this the
+   node sits alone in empty space and reads as a rendering fault. It fades
+   rather than rises — a translate on an 8px circle only advertises itself. */
 @utility intro-node {
   animation: intro-fade 0.4s ease-out 0.52s backwards;
 }
 
-/*
- * Staggers a container's direct children in. Six steps is the whole budget:
- * past that the last element lands late enough to read as a bug rather than as
- * choreography. The hero has four.
- */
+/* Staggers a container's direct children. Six steps is the budget; past that
+   the last element lands late enough to read as a bug. The hero has four. */
 @utility intro-stagger {
   & > * {
     animation: intro-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;

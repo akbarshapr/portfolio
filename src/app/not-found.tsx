@@ -2,8 +2,7 @@ import Link from "next/link";
 
 import { primaryButton, StatusShell } from "@/components/status-shell";
 
-// Static export writes this to out/404.html, which every static host serves as
-// its not-found page with no configuration.
+// Written to out/404.html, which static hosts serve as their not-found page.
 export default function NotFound() {
   return (
     <StatusShell
