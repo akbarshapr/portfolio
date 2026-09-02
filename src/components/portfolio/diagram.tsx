@@ -1,26 +1,14 @@
 /**
- * The brand mark, and the only artwork left on the page.
+ * The brand mark: a torii, drawn as hairlines so it belongs to the same family
+ * as the rail.
  *
- * A torii — two uprights and two crossbeams, drawn as hairlines so it belongs
- * to the same family as the rail. It is a gateway, which is a fair description
- * of the work; and because `rail-slot` centres it, the mark sits on the SAME
- * vertical axis as the rail line. The line does not pass THROUGH the gate — it
- * starts at the hero's RailRow, below the header, so a deliberate gap sits
- * between the two. They share the axis, not the stroke.
+ * Five strokes and no fills — that is what keeps it legible at 16px. Every path
+ * is `currentColor`, so one file serves both themes; set the colour on the
+ * parent and never hardcode a hex here. `pathLength="1"` normalises each stroke
+ * so `intro-mark` can draw all five from one keyframe.
  *
- * Five strokes, no fills, no second colour: that is the budget, and it is what
- * keeps the mark legible at 16px. Resist adding the shimaki, the kusabi, or a
- * plinth — they are correct on a real torii and turn to mush below 24px.
- *
- * Every path is `currentColor`, which is the whole trick: the mark takes its
- * colour from the text colour it sits in, so one file serves both themes with
- * no `.dark` variant and no second asset. Do not hardcode a hex here — a fixed
- * white vanishes on the light background and a fixed dark one vanishes at
- * night. Set the colour on the parent, which is `text-accent` in the nav.
- *
- * `public/favicon.svg` is the same five paths with the palette hardcoded — a
- * favicon has no CSS context to read, so `currentColor` there resolves to the
- * browser default rather than ours. Change one, change both.
+ * public/favicon.svg is the same five paths with the palette hardcoded, since a
+ * favicon has no CSS context. Change one, change both.
  */
 export function BrandMark({ className }: { className?: string }) {
   return (
@@ -33,15 +21,15 @@ export function BrandMark({ className }: { className?: string }) {
       strokeWidth="1.5"
       strokeLinecap="round"
     >
-      {/* kasagi — the top lintel, lifted at the ends the way a myojin torii is */}
-      <path d="M3.2 5.3Q12 6.7 20.8 5.3" />
-      {/* nuki — the tie beam, overhanging the uprights on both sides */}
-      <path d="M5.8 10H18.2" />
-      {/* gakuzuka — the short strut. It is what stops the mark reading as a π. */}
-      <path d="M12 6.3V10" />
-      {/* hashira — the uprights, splayed at the foot so the gate sits down */}
-      <path d="M7.5 6.1L6.5 20.9" />
-      <path d="M16.5 6.1L17.5 20.9" />
+      {/* kasagi — the top lintel */}
+      <path pathLength="1" d="M3.2 5.3Q12 6.7 20.8 5.3" />
+      {/* nuki — the tie beam */}
+      <path pathLength="1" d="M5.8 10H18.2" />
+      {/* gakuzuka — the strut */}
+      <path pathLength="1" d="M12 6.3V10" />
+      {/* hashira — the uprights */}
+      <path pathLength="1" d="M7.5 6.1L6.5 20.9" />
+      <path pathLength="1" d="M16.5 6.1L17.5 20.9" />
     </svg>
   );
 }

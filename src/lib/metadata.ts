@@ -3,15 +3,11 @@ import type { Metadata } from "next";
 import { SITE_NAME, SITE_URL } from "./site";
 
 /**
- * Shared Open Graph base.
+ * Shared Open Graph fields.
  *
- * Next merges `metadata` SHALLOWLY: an `openGraph` object exported from a page
- * REPLACES the layout's outright — it does not deep-merge into it. Defining
- * only `title`/`description` on the page therefore silently drops og:image,
- * og:site_name and og:type from that page, with no warning and no build error.
- *
- * So anything that must appear on every page is spread in explicitly rather
- * than inherited. Add to this object, never to one call site.
+ * Next merges `metadata` shallowly: an `openGraph` exported from a page
+ * replaces the layout's outright, silently dropping og:image and og:site_name.
+ * Both call sites spread this in — add here, never at one of them.
  */
 export const OG_BASE = {
   siteName: SITE_NAME,

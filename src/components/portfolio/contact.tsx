@@ -19,7 +19,7 @@ const channels = [
 export function Contact() {
   return (
     <section id="contact" style={sectionToneStyle("contact")}>
-      <RailRow index={sectionIndex("contact")}>
+      <RailRow index={sectionIndex("contact")} reveal>
         <RailLabel label={sectionLabel("contact")} />
 
         <h2 className="mt-4 text-balance font-serif text-section text-foreground">

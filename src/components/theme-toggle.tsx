@@ -7,15 +7,11 @@ type Theme = "light" | "dark";
 
 const root = () => document.documentElement;
 
-/**
- * The toggle owns the flip, not the initial value.
- *
- * themeInitScript (lib/theme.ts) has already resolved saved-preference →
- * system-preference and put the class on <html> before first paint. That class
- * is external state, which is exactly what useSyncExternalStore is for: it
- * reads the live DOM on the client, takes a separate snapshot on the server,
- * and reconciles the two without a `mounted` flag or a setState inside an
- * effect. The button therefore can never disagree with what is on screen.
+/*
+ * The toggle owns the flip, not the initial value — themeInitScript already put
+ * the class on <html> before first paint. Reading it back through
+ * useSyncExternalStore keeps server and client in agreement without a `mounted`
+ * flag or a setState inside an effect.
  */
 function subscribe(onStoreChange: () => void) {
   const observer = new MutationObserver(onStoreChange);
@@ -25,9 +21,14 @@ function subscribe(onStoreChange: () => void) {
 
 const getSnapshot = (): Theme => (root().classList.contains("dark") ? "dark" : "light");
 
-// Used for SSR *and* for the hydration pass, so the server HTML and React's
-// first client render agree. The observer corrects it immediately afterwards.
+// Used for SSR and for the hydration pass, so both agree. The observer corrects
+// it immediately afterwards.
 const getServerSnapshot = (): Theme => "light";
+
+let fadeTimer: number | undefined;
+
+/** Matches the duration in the `theme-switching` utility, plus a little slack. */
+const FADE_MS = 400;
 
 export function ThemeToggle() {
   const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
@@ -38,26 +39,31 @@ export function ThemeToggle() {
       type="button"
       aria-label={`Switch to ${next} mode`}
       onClick={() => {
-        // Mutating the class is what drives the re-render, via the observer.
-        root().classList.toggle("dark", next === "dark");
+        const el = root();
 
-        // Persistence happens HERE and nowhere else, on purpose. Writing
-        // localStorage on mount would pin a visitor who never touched the
-        // toggle to whatever their system said on their first visit, and they
-        // would stop following system changes from then on.
+        // Arm the crossfade BEFORE flipping: a transition only runs if the
+        // property is already declared when the value changes. Both class
+        // writes land in one style recalculation.
+        el.classList.add("theme-switching");
+        window.clearTimeout(fadeTimer);
+        fadeTimer = window.setTimeout(() => el.classList.remove("theme-switching"), FADE_MS);
+
+        el.classList.toggle("dark", next === "dark");
+
+        // Persisted here and nowhere else: writing on mount would pin a visitor
+        // who never touched the toggle to their first-visit system preference.
         try {
           window.localStorage.setItem("theme", next);
         } catch {
-          // Private mode or blocked storage — the toggle still works for this
-          // page view, it just won't be remembered.
+          // Blocked storage — the toggle still works, it just isn't remembered.
         }
       }}
-      className="hover-accent inline-flex h-8 w-8 items-center justify-center rounded text-muted-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="hover-accent inline-flex h-10 w-10 items-center justify-center rounded text-muted-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
       {theme === "dark" ? (
-        <Sun className="h-4 w-4" aria-hidden />
+        <Sun className="h-5 w-5" aria-hidden />
       ) : (
-        <Moon className="h-4 w-4" aria-hidden />
+        <Moon className="h-5 w-5" aria-hidden />
       )}
     </button>
   );

@@ -14,7 +14,6 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    /* Mono is the body voice, and it is the system's — nothing is downloaded. */
     font-family: var(--font-mono);
     font-size: var(--text-prose);
     line-height: var(--text-prose--line-height);
@@ -25,6 +24,23 @@
   ::selection {
     background-color: var(--accent);
     color: var(--accent-foreground);
+  }
+
+  /*
+   * Scroll reveal, hidden half. Scoped to `reveal-armed`, which lib/reveal.ts
+   * adds before first paint — so with JS off or the bundle missing, nothing is
+   * hidden. Do not simplify this selector to a bare `[data-reveal]`.
+   *
+   * The hidden state must match intro-rise's `from` frame exactly, or the block
+   * jumps when the animation takes over.
+   */
+  .reveal-armed [data-reveal]:not([data-reveal="shown"]) {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+
+  [data-reveal="shown"] {
+    animation: intro-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms) backwards;
   }
 
   /* Reaches CSS animations only — SMIL and JS motion each need their own check. */
@@ -39,6 +55,10 @@
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
+      /* The delay matters as much as the duration: the intro holds its opening
+         frame through animation-delay, so collapsing only the duration would
+         leave the page blank for the longest delay, then snap. */
+      animation-delay: 0.01ms !important;
     }
   }
 }

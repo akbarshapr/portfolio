@@ -8,23 +8,17 @@ const config = [
   ...nextCoreWebVitals,
   ...nextTypeScript,
 
-  // Prettier runs as a lint rule, as it did in the old build — so `npm run lint`
-  // fails on formatting. It must stay last to switch off conflicting stylistic
-  // rules from the configs above.
+  // Runs prettier as a lint rule, so `npm run lint` fails on formatting. Must
+  // stay last to switch off conflicting stylistic rules from the configs above.
   prettierRecommended,
 
   {
     rules: {
-      /*
-       * The About portrait is a plain <img> deliberately. A static export has
-       * no server to optimise images on demand, so next/image would add API
-       * surface and buy nothing. Leaving this rule on would flag a considered
-       * decision on every single run.
-       */
+      // The About portrait is a plain <img> deliberately: a static export has
+      // no server to optimise on demand, so next/image would buy nothing.
       "@next/next/no-img-element": "off",
 
-      // Matches the old config: unused locals are tsc's business, not lint's,
-      // and both noUnusedLocals/noUnusedParameters are off in tsconfig.
+      // Unused locals are tsc's business; noUnusedLocals is off in tsconfig too.
       "@typescript-eslint/no-unused-vars": "off",
     },
   },

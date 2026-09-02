@@ -12,6 +12,7 @@ import { Projects } from "@/components/portfolio/projects";
 import { Skills } from "@/components/portfolio/skills";
 import { Wins } from "@/components/portfolio/wins";
 import { Worklog } from "@/components/portfolio/worklog";
+import { Reveal } from "@/components/reveal";
 import { OG_BASE } from "@/lib/metadata";
 import { portfolio } from "@/lib/portfolio";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
@@ -34,9 +35,8 @@ export const metadata: Metadata = {
   },
 };
 
-// One @graph rather than two <script> tags: same statements, one parse, and the
-// Person/WebSite nodes can reference each other. `sameAs` is derived from the
-// social links so the two can't drift.
+// One @graph rather than two <script> tags, so the nodes can reference each
+// other. `sameAs` is derived from the social links so the two can't drift.
 const structuredData = {
   "@context": "https://schema.org",
   "@graph": [
@@ -90,6 +90,10 @@ export default function Home() {
         <Beyond />
         <Contact />
       </main>
+
+      {/* Renders nothing: one IntersectionObserver reveals each section as it
+          arrives. Everything above stays a Server Component. */}
+      <Reveal />
     </div>
   );
 }

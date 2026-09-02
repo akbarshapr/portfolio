@@ -1,16 +1,15 @@
 /*
- * Custom utilities. Each exists because the pattern repeats across at least two
- * components; a one-off belongs inline on the element.
+ * Custom utilities. A pattern earns a place here once a second component wants
+ * it; a one-off belongs inline on the element.
  *
- * font-serif OVERRIDES Tailwind's generated utility so the ligature settings
- * travel with the family.
- *
- * Anything accent-coloured in here reads var(--accent), NOT var(--color-accent).
- * The two are not interchangeable: --color-accent resolves once on :root, so a
- * section that rebinds --accent (see `tone` in lib/sections.ts) would not reach
- * it. Tailwind's own generated utilities already compile to var(--accent).
+ * Anything accent-coloured reads var(--accent), NOT var(--color-accent). The
+ * two are not interchangeable: --color-accent resolves once on :root, so a
+ * section that rebinds --accent (see `tone` in lib/sections.ts) would not
+ * reach it.
  */
 
+/* Overrides Tailwind's generated utility so the ligature settings travel with
+   the family. */
 @utility font-serif {
   font-family: var(--font-serif);
   font-feature-settings: "liga", "dlig";
@@ -58,10 +57,8 @@
   gap: var(--rail-gap);
 }
 
-/*
- * Absolutely positioned, so it is not a grid item. inset-block: 0 spans the
- * whole section, which is what joins consecutive sections into one line.
- */
+/* Absolutely positioned, so it is not a grid item. inset-block: 0 spans the
+   whole section, which is what joins consecutive sections into one line. */
 @utility rail-line {
   position: absolute;
   inset-block: 0;
@@ -83,11 +80,8 @@
   }
 }
 
-/*
- * The page's only hover treatment. Nothing lifts or casts a shadow — with no
- * cards to lift there is nothing to raise, so hover is a colour change and an
- * underline offset, matching the reference's `.cactus-link`.
- */
+/* The page's only hover treatment: a colour change and a border tint. Nothing
+   lifts or casts a shadow — with no cards there is nothing to raise. */
 @utility hover-accent {
   transition:
     color 0.18s ease,
@@ -96,5 +90,153 @@
   &:hover {
     color: var(--accent);
     border-color: color-mix(in oklch, var(--accent) 55%, transparent);
+  }
+}
+
+/*
+ * The theme crossfade, applied to <html> for ~400ms around the .dark flip.
+ * A class rather than a standing rule on `*`, which would drag every hover
+ * through it too.
+ *
+ * Specificity does the work, not !important: `.theme-switching *` (0,1,1)
+ * beats hover-accent's own transition (0,1,0) in the same layer. Reduced motion
+ * is already covered by base.css.
+ */
+@utility theme-switching {
+  &,
+  & *,
+  & *::before,
+  & *::after {
+    transition:
+      background-color 0.35s ease,
+      border-color 0.35s ease,
+      color 0.35s ease,
+      fill 0.35s ease,
+      stroke 0.35s ease;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * The intro — the mark strokes itself in, the rail descends out of it, and the
+ * hero's lines arrive underneath. ~1.3s, no JavaScript.
+ *
+ * Two rules hold it up:
+ *
+ * 1. THE START STATE LIVES INSIDE THE KEYFRAME, never on the element. Every
+ *    animation declares only `from`, and `animation-fill-mode: backwards` holds
+ *    that frame through the delay — so a stylesheet that fails to arrive yields
+ *    a plain page rather than a blank one. Never lift these into a base rule.
+ * 2. Only opacity, transform and stroke-dashoffset animate, all
+ *    compositor-only, so no layout is read or written and the text is in the
+ *    HTML throughout.
+ *
+ * Timings overlap on purpose — header 0s, mark 0.22s, rail 0.38s, hero 0.45s.
+ * Sequential reads as a machine taking turns; the overlap makes it one
+ * movement. The reduced-motion block in base.css collapses delays as well as
+ * durations, and both are required.
+ * ------------------------------------------------------------------------- */
+
+@keyframes intro-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+}
+
+@keyframes intro-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes intro-descend {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+/* One offset draws every stroke whatever its real length, because the paths
+   carry pathLength="1" — see diagram.tsx. */
+@keyframes intro-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+/* A single element arriving on the shared curve. The header uses it. */
+@utility intro-lift {
+  animation: intro-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+/* The gateway builds from the ground up, so the delays run against source
+   order, which lists the mark top-down. */
+@utility intro-mark {
+  & path {
+    stroke-dasharray: 1;
+    animation: intro-draw 0.6s ease-out backwards;
+  }
+
+  /* kasagi — the lintel, last to land */
+  & path:nth-of-type(1) {
+    animation-delay: 0.53s;
+  }
+
+  /* nuki — the tie beam */
+  & path:nth-of-type(2) {
+    animation-delay: 0.41s;
+  }
+
+  /* gakuzuka — the strut */
+  & path:nth-of-type(3) {
+    animation-delay: 0.47s;
+  }
+
+  /* hashira — both uprights together, the foundation */
+  & path:nth-of-type(4),
+  & path:nth-of-type(5) {
+    animation-delay: 0.22s;
+  }
+}
+
+/* ONLY the hero's line carries this — every other section is below the fold
+   while it plays. */
+@utility intro-rail {
+  transform-origin: top;
+  animation: intro-descend 0.7s cubic-bezier(0.65, 0, 0.35, 1) 0.38s backwards;
+}
+
+/* Timed to land just after the descending line passes it; without this the
+   node sits alone in empty space and reads as a rendering fault. It fades
+   rather than rises — a translate on an 8px circle only advertises itself. */
+@utility intro-node {
+  animation: intro-fade 0.4s ease-out 0.52s backwards;
+}
+
+/* Staggers a container's direct children. Six steps is the budget; past that
+   the last element lands late enough to read as a bug. The hero has four. */
+@utility intro-stagger {
+  & > * {
+    animation: intro-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    animation-delay: calc(0.45s + var(--intro-step, 0s));
+  }
+
+  & > *:nth-child(2) {
+    --intro-step: 0.07s;
+  }
+
+  & > *:nth-child(3) {
+    --intro-step: 0.16s;
+  }
+
+  & > *:nth-child(4) {
+    --intro-step: 0.23s;
+  }
+
+  & > *:nth-child(5) {
+    --intro-step: 0.3s;
+  }
+
+  & > *:nth-child(6) {
+    --intro-step: 0.37s;
   }
 }
