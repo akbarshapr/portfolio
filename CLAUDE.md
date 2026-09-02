@@ -199,13 +199,17 @@ Shared pieces:
 
 ### The header
 
-**Two rows.** Row one is the identity line — the mark, the name, and the controls (menu + theme), all on one line at every width, with the controls pushed right by `ms-auto`. Row two is the links, divided by hairlines and indented past the rail column by an empty `rail-slot` so they sit under the name rather than under the mark. The row-two wrapper carries the breakpoint (`hidden lg:block`) rather than the `rail-lead` element itself, because `hidden` and `rail-lead`'s own `display: flex` are both utilities and would fight.
+**One row: the mark, the links, and the controls**, with the controls pushed right by `ms-auto`. The mark sits in a `rail-slot`, so `rail-lead`'s gap lands the links at exactly the same x as the hero `h1` below — measured 414.7px for both at a 1280px viewport.
 
-The header name is **monospace**; the hero `h1` is **Space Grotesk 700** at `--text-display`, the page's third family and the only place it appears. The serif belongs to the section headings and starts at section 01.
+**The name is deliberately absent, and nothing replaced it.** The hero states it 40px below at `--text-display`, and the header does not stick, so a second copy was read once and never again. A tagline or a tech line here was considered and rejected: it competes with the hero's own role line one line further down, and it is the same ornament the page removed when it dropped the chip row. The header's one durable job is navigation.
 
-**The header does not stick.** The reference's scrolls away, and a two-line header pinned to the top of a 768px column eats too much of the viewport. `--header-height` survives only as the scroll-padding above an anchor target, which is why it is 2rem and no longer describes a height.
+That leaves **the mark carrying identity alone**, which is why it is the `#top` anchor and why its `aria-label` is load-bearing — with no visible name, that attribute is the link's only accessible name. Do not strip it as tidy-up.
 
-**The two rows swap responsibilities at `lg`, and exactly one is ever the navigation.** At `lg` and above the link row shows **four** links — About, Work, Experience, Contact, from `NAV_SECTIONS` — and the menu button is hidden. Below `lg` the links are hidden and the `Sheet` **is** the navigation, which is why it lists **every** section with its rail number rather than the four. Never hide both, and do not hide the menu button below `lg` "for symmetry" — that strands nine sections behind scrolling alone.
+The hero `h1` is **Space Grotesk 700** at `--text-display`, the page's third family and the only place it appears. The serif belongs to the section headings and starts at section 01.
+
+**The header does not stick.** The reference's scrolls away, and a header pinned to the top of a 768px column eats too much of the viewport. `--header-height` survives only as the scroll-padding above an anchor target, which is why it is 2rem and no longer describes a height.
+
+**Navigation swaps at `lg`, and exactly one mechanism is ever live.** At `lg` and above the row shows **four** links — About, Work, Experience, Contact, from `NAV_SECTIONS` — and the menu button is hidden. Below `lg` the links are hidden and the `Sheet` **is** the navigation, which is why it lists **every** section with its rail number rather than the four. Never hide both, and do not hide the menu button below `lg` "for symmetry" — that strands nine sections behind scrolling alone.
 
 The hero intro is **plain text in one colour**, and it opens straight on the name — there is no eyebrow above it.
 
