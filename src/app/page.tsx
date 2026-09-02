@@ -12,6 +12,7 @@ import { Projects } from "@/components/portfolio/projects";
 import { Skills } from "@/components/portfolio/skills";
 import { Wins } from "@/components/portfolio/wins";
 import { Worklog } from "@/components/portfolio/worklog";
+import { Reveal } from "@/components/reveal";
 import { OG_BASE } from "@/lib/metadata";
 import { portfolio } from "@/lib/portfolio";
 import { SITE_NAME, SITE_URL } from "@/lib/site";
@@ -90,6 +91,10 @@ export default function Home() {
         <Beyond />
         <Contact />
       </main>
+
+      {/* Renders nothing: one IntersectionObserver that reveals each section as
+          it arrives. Everything above stays a Server Component. */}
+      <Reveal />
     </div>
   );
 }

@@ -39,7 +39,7 @@ export function StatusShell({
       <p className="micro-label text-accent">Error {code}</p>
 
       <h1 className="mt-3 font-serif text-section text-foreground">{title}</h1>
-      <p className="mt-3 max-w-prose text-muted-foreground">{detail}</p>
+      <p className="mt-3 max-w-measure text-muted-foreground">{detail}</p>
 
       <div className="mt-8 flex flex-wrap gap-3">{children}</div>
     </div>

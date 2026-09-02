@@ -25,7 +25,7 @@ type Props = {
 export function Section({ id, title, accentWord, trailing, children }: Props) {
   return (
     <section id={id} style={sectionToneStyle(id)}>
-      <RailRow index={sectionIndex(id)}>
+      <RailRow index={sectionIndex(id)} reveal>
         <RailLabel label={sectionLabel(id)} />
 
         <h2 className="mt-4 text-balance font-serif text-section text-foreground">

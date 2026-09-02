@@ -18,6 +18,12 @@
  * white vanishes on the light background and a fixed dark one vanishes at
  * night. Set the colour on the parent, which is `text-accent` in the nav.
  *
+ * Each path carries pathLength="1", which normalises its length to a single
+ * unit so `intro-mark` can draw all five with one shared stroke-dashoffset
+ * regardless of how long each stroke actually is. It changes no geometry and
+ * has no effect when the animation is not running, so the favicon does not
+ * need it.
+ *
  * `public/favicon.svg` is the same five paths with the palette hardcoded — a
  * favicon has no CSS context to read, so `currentColor` there resolves to the
  * browser default rather than ours. Change one, change both.
@@ -34,14 +40,14 @@ export function BrandMark({ className }: { className?: string }) {
       strokeLinecap="round"
     >
       {/* kasagi — the top lintel, lifted at the ends the way a myojin torii is */}
-      <path d="M3.2 5.3Q12 6.7 20.8 5.3" />
+      <path pathLength="1" d="M3.2 5.3Q12 6.7 20.8 5.3" />
       {/* nuki — the tie beam, overhanging the uprights on both sides */}
-      <path d="M5.8 10H18.2" />
+      <path pathLength="1" d="M5.8 10H18.2" />
       {/* gakuzuka — the short strut. It is what stops the mark reading as a π. */}
-      <path d="M12 6.3V10" />
+      <path pathLength="1" d="M12 6.3V10" />
       {/* hashira — the uprights, splayed at the foot so the gate sits down */}
-      <path d="M7.5 6.1L6.5 20.9" />
-      <path d="M16.5 6.1L17.5 20.9" />
+      <path pathLength="1" d="M7.5 6.1L6.5 20.9" />
+      <path pathLength="1" d="M16.5 6.1L17.5 20.9" />
     </svg>
   );
 }

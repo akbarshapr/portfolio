@@ -15,19 +15,34 @@ import { cn } from "@/lib/utils";
  */
 export function RailRow({
   index,
+  intro,
+  reveal,
   className,
   children,
 }: {
   /** Zero-padded position, e.g. "03". Omit for the hero, which sits above the count. */
   index?: string;
+  /**
+   * Plays the load-in on this row: the hairline descends and the content
+   * staggers in. The HERO ONLY — every row would animate identically, but the
+   * rest are below the fold while it runs, so it would be motion nobody sees.
+   */
+  intro?: boolean;
+  /**
+   * Marks the content column for the scroll reveal (components/reveal.tsx).
+   * Deliberately NOT on the <section>: the hairline is a child of it, and
+   * fading whole sections would break the line into per-section patches at the
+   * boundaries. Only the content moves; the rail stays one continuous spine.
+   */
+  reveal?: boolean;
   className?: string;
   children: ReactNode;
 }) {
   return (
     <div className={cn("rail-grid", className)}>
-      <span aria-hidden className="rail-line" />
+      <span aria-hidden className={cn("rail-line", intro && "intro-rail")} />
 
-      <div className="flex justify-center pt-12 sm:pt-16">
+      <div className={cn("flex justify-center pt-12 sm:pt-16", intro && "intro-node")}>
         {index ? (
           <span
             aria-hidden
@@ -45,7 +60,12 @@ export function RailRow({
         )}
       </div>
 
-      <div className="min-w-0 py-12 sm:py-16">{children}</div>
+      <div
+        className={cn("min-w-0 py-12 sm:py-16", intro && "intro-stagger")}
+        data-reveal={reveal ? "" : undefined}
+      >
+        {children}
+      </div>
     </div>
   );
 }

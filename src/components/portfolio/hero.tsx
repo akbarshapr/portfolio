@@ -13,15 +13,17 @@ export function Hero() {
     <section id="top">
       {/* No index: the hero sits above the numbering, but the rail starts here
           so the line runs unbroken from the top of the page. */}
-      <RailRow>
-        {/* Mono, not serif — the reference's own h1 is monospace, and this is
-            the block that was pointed at. Section headings stay serif. */}
-        <h1 className="text-display font-bold text-foreground">{portfolio.name}</h1>
+      {/* `intro` is the load-in: the rail draws down and these children
+          stagger in behind it. See the intro block in styles/utilities.css. */}
+      <RailRow intro>
+        {/* The page's third family, and this is the ONLY place it appears —
+            Space Grotesk 700, a geometric grotesque against the mono body. The
+            serif stays with the section headings. font-bold is real weight
+            here, not synthesised: 700 is the weight layout.tsx downloads. */}
+        <h1 className="font-display text-display font-bold tracking-display text-foreground">
+          {portfolio.name}
+        </h1>
         <p className="mt-1 text-title text-accent">{portfolio.title}</p>
-
-        {/* The eyebrow the reference opens with. micro-label uppercases it, so
-            the copy stays sentence case here. */}
-        <p className="micro-label mt-10 text-muted-foreground">Hello world</p>
 
         {/*
           ONE COLOUR, deliberately. This paragraph used to run four phrases
@@ -30,7 +32,7 @@ export function Hero() {
           sentence reads as decoration rather than as structure. The accent has
           to be a thing the page arrives at. Plain text — do not re-highlight it.
         */}
-        <p className="mt-4 max-w-prose text-muted-foreground">{portfolio.intro}</p>
+        <p className="mt-6 max-w-measure text-muted-foreground">{portfolio.intro}</p>
 
         {/*
           Icons only, no captions and no "Find me on" label above them. With the

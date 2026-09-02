@@ -16,6 +16,19 @@
   --container-page: 48rem;
 
   /*
+   * The measure for running copy, as `max-w-measure`.
+   *
+   * NOT `max-w-prose`. Tailwind v4 ships that as a static 65ch utility rather
+   * than a --container-* entry, and it merges an @utility override INTO its own
+   * rule with its 65ch last — so the built-in cannot be beaten by name. A
+   * separate name is generated from this scale and simply wins on its own.
+   *
+   * 80ch is wider than the rail's content column at --container-page, so today
+   * it reads as "fill the column" and only starts binding if the page widens.
+   */
+  --container-measure: 80ch;
+
+  /*
    * Two families. Mono is the body voice and comes from the system — no
    * webfont, no download, no render-blocking request. DM Serif Text is the
    * ONLY downloaded face; it is what keeps the page from reading as a terminal.
@@ -28,10 +41,19 @@
   --font-serif: var(--font-dm-serif), ui-serif, Georgia, serif;
 
   /*
-   * Fixed sizes, one value each. Small on purpose: 14px body, 28px at the very
+   * The third voice, and it speaks ONE word: the hero name. Space Grotesk 700,
+   * self-hosted by next/font (see app/layout.tsx). The system sans behind it is
+   * a real fallback, not decoration — drop the download and the name still
+   * reads as a bold sans rather than collapsing into the mono body.
+   */
+  --font-display:
+    var(--font-space-grotesk), ui-sans-serif, system-ui, "Segoe UI", Helvetica, Arial, sans-serif;
+
+  /*
+   * Fixed sizes, one value each. Small on purpose: 14px body, 32px at the very
    * top. px in the comment, rem in the value (px ÷ 16).
    */
-  --text-nano: 0.6875rem; /* 11px — tech chips */
+  --text-nano: 0.6875rem; /* 11px — rail numbers */
   --text-nano--line-height: 1.4;
 
   --text-micro: 0.75rem; /* 12px — uppercase labels, dates, nav */
@@ -49,11 +71,14 @@
   --text-section: 1.5rem; /* 24px — section headings */
   --text-section--line-height: 1.25;
 
-  --text-display: 1.75rem; /* 28px — the hero name, nothing else */
+  --text-display: 2rem; /* 32px — the hero name, nothing else */
   --text-display--line-height: 1.2;
 
   --tracking-label: 0.12em;
   --tracking-caption: 0.16em;
+  /* Negative, and only at --text-display: a bold sans set large looks loose at
+     its default spacing. Do not reuse it on body copy. */
+  --tracking-display: -0.02em;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);

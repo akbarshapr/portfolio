@@ -172,7 +172,7 @@ The layout was built against `https://astro-cactus.chriswilliams.dev/`. What tha
 - **No pills or chips.** `TechTags` renders dot-separated plain text. The bordered uppercase chip row it used to render was most of what made the page feel busy.
 - **No iconography beyond navigation affordances.** What is left is the `BrandMark`, the three social icons, and the arrow/menu/theme glyphs — all of which do a job.
 - **Two accents, and the split is structural.** A component cannot pick a colour; the page opens cobalt and closes red, on a boundary declared once in `sections.ts`. See **The two accents**.
-- **The largest text on the page is 28px.** See **Typography**.
+- **The largest text on the page is 32px.** See **Typography**.
 
 There is **no code-styled text anywhere on the page.** Nav links read `About`/`Work`/`Notes`, not `~/about`; the footer shows a plain copyright, not `$ echo`. The body voice is monospace, but that is a typographic choice, not a terminal affectation. If you are adding UI, do not write shell prompts, file paths, `//` comment prefixes, or `const x = "..."` lines as visible copy.
 
@@ -199,13 +199,15 @@ Shared pieces:
 
 ### The header
 
-The mark on the left, and the name stacked **above** the links rather than beside them, with the links divided by hairlines. Both the name and the hero `h1` are **monospace**, not serif — the reference's own `h1` is mono, and the top of the page matches it. DM Serif Text starts at section 01.
+**Two rows.** Row one is the identity line — the mark, the name, and the controls (menu + theme), all on one line at every width, with the controls pushed right by `ms-auto`. Row two is the links, divided by hairlines and indented past the rail column by an empty `rail-slot` so they sit under the name rather than under the mark. The row-two wrapper carries the breakpoint (`hidden lg:block`) rather than the `rail-lead` element itself, because `hidden` and `rail-lead`'s own `display: flex` are both utilities and would fight.
+
+The header name is **monospace**; the hero `h1` is **Space Grotesk 700** at `--text-display`, the page's third family and the only place it appears. The serif belongs to the section headings and starts at section 01.
 
 **The header does not stick.** The reference's scrolls away, and a two-line header pinned to the top of a 768px column eats too much of the viewport. `--header-height` survives only as the scroll-padding above an anchor target, which is why it is 2rem and no longer describes a height.
 
-It shows **four** links — About, Work, Experience, Contact, from `NAV_SECTIONS`. Everything else is still on the page and still numbered on the rail. The menu button opens a `Sheet` listing **every** section with its rail number, at every width — that is what keeps a four-link header from stranding the other five.
+**The two rows swap responsibilities at `lg`, and exactly one is ever the navigation.** At `lg` and above the link row shows **four** links — About, Work, Experience, Contact, from `NAV_SECTIONS` — and the menu button is hidden. Below `lg` the links are hidden and the `Sheet` **is** the navigation, which is why it lists **every** section with its rail number rather than the four. Never hide both, and do not hide the menu button below `lg` "for symmetry" — that strands nine sections behind scrolling alone.
 
-The hero intro is **plain text in one colour**. Above it sits a `micro-label` eyebrow reading **Hello world** — the reference opens the same way, and `micro-label` uppercases it, so the copy stays sentence case in the source.
+The hero intro is **plain text in one colour**, and it opens straight on the name — there is no eyebrow above it.
 
 The three social links below it are **icons with no captions**, and no "Find me on" label above them. With the visible text gone, each anchor's only accessible name is its `aria-label` — that attribute is load-bearing, not decoration, and must not be dropped as tidy-up.
 
@@ -214,6 +216,7 @@ The three social links below it are **icons with no captions**, and no "Find me 
 - `src/lib/theme.ts` exports `themeInitScript`, a stringified blocking script that `layout.tsx` injects into `<head>`. It resolves saved preference → system preference and sets the `.dark` class pre-paint. It must stay first in `<head>`, and it must stay a string — it has to run ahead of React, so it cannot be a component.
 - `<html>` carries **`suppressHydrationWarning`**, and that is load-bearing, not noise suppression: the init script mutates `className` before React hydrates, so server and client markup differ there by design. It is scoped to that one element and does not reach anything inside.
 - `src/components/theme-toggle.tsx` owns the flip but **not** the initial value. It reads the applied class through **`useSyncExternalStore`**, with a `MutationObserver` subscription and a separate server snapshot. That is what keeps hydration consistent without a `mounted` flag or a `setState` inside an effect — both of which React 19's lint rules now reject. There is no `ThemeProvider` and no `next-themes`.
+- The flip is a **crossfade**, not a cut. The click handler adds `theme-switching` to `<html>`, flips `.dark`, and takes the class off again 400ms later. It has to be added **before** the flip — a transition only runs if the property is already declared when the value changes — and both class writes land in one style recalculation, so it is one frame. It is a class rather than a standing rule on `*` because a permanent transition would drag every hover and focus change through it too. Specificity carries it: `.theme-switching *` is (0,1,1) and outranks `hover-accent`'s own transition at (0,1,0) inside the utilities layer. Reduced motion needs nothing extra — `base.css` collapses `transition-duration` with `!important`, and an important declaration in an earlier cascade layer outranks a later one.
 - It writes `localStorage` **only in the click handler** — persisting on mount would pin a visitor who never touched the toggle to whatever their system said on their first visit, and they'd stop following system changes afterwards.
 - The `theme-color` entries in `layout.tsx`'s `viewport` export use `prefers-color-scheme` media queries, so they follow the **system** preference only. A meta query cannot observe the `.dark` class the in-page toggle sets; this is a known, accepted limitation affecting only mobile browser chrome.
 
@@ -242,13 +245,15 @@ Tailwind v4 runs through **PostCSS** here (`postcss.config.mjs` → `@tailwindcs
 - Adding a semantic color means three edits: `:root`, `.dark`, **and** `@theme inline` as `--color-<name>`. A token defined only in `:root` silently keeps its light value in dark mode — there is no error, just a wrong color.
 - **Both palettes are near-neutral.** Light is `oklch(0.98 0 0)` — literally zero chroma, a plain sheet rather than warm paper. Dark is `oklch(0.2364 0.0045 248)`.
 - Two rules survive from the palette work and still apply. If you darken `--background` in dark mode, raise `--border` with it or the hairlines vanish — and the rail _is_ hairlines. And keep dark-mode chroma at or below ~0.006: a large field is far more sensitive to a hue cast than a small swatch suggests.
-- **`--font-serif` reads `var(--font-dm-serif)`**, which `next/font` defines on `<html>` via the class applied in `layout.tsx`. Do not put the family name back as a literal — the font is self-hosted and its generated name is not stable.
-- Non-colour tokens: `--container-page` (48rem/768px), `--header-height` (2rem — scroll-padding above an anchor, **not** a header height; the header does not stick), `--page-pad`/`--rail-width`/`--rail-gap` (rail geometry, with one `sm` media query), the seven type steps `--text-nano` → `--text-display`, `--tracking-label`/`--tracking-caption`, `--radius`.
+- **`--font-serif` reads `var(--font-dm-serif)` and `--font-display` reads `var(--font-space-grotesk)`**, both of which `next/font` defines on `<html>` via the classes applied in `layout.tsx`. Do not put either family name back as a literal — the fonts are self-hosted and their generated names are not stable. `--font-display` keeps a real system-sans fallback behind it, so dropping the download degrades the name rather than breaking it.
+- Non-colour tokens: `--container-page` (48rem/768px), `--container-measure` (80ch, the measure for running copy), `--header-height` (2rem — scroll-padding above an anchor, **not** a header height; the header does not stick), `--page-pad`/`--rail-width`/`--rail-gap` (rail geometry, with one `sm` media query), the seven type steps `--text-nano` → `--text-display`, `--tracking-label`/`--tracking-caption`/`--tracking-display` (the last is negative and belongs to `--text-display` alone), `--radius`.
 - **An arbitrary value in a component is a smell.** `text-[11px]`, `tracking-[0.16em]`, `leading-[1.9]` and friends were all replaced by tokens. If you need one, add the token here first — unless it genuinely occurs once. The same goes for a raw Tailwind size like `text-lg`: the token scale replaced all of them, and reintroducing one breaks the page's one-class-per-element rule.
 
 **`src/styles/base.css`** holds element defaults: the border-colour reset, `scroll-padding-top`, the body font and colour, `::selection`, and a `prefers-reduced-motion: reduce` block. That block reaches CSS animations only — SMIL and JS-driven motion would each need their own check.
 
-**`src/styles/utilities.css`** holds the custom `@utility` blocks: `font-serif` (_overridden_ to carry font-feature-settings with the family), `micro-label`, `link-underline`, `hover-accent`, and the layout set (`page-shell`, `rail-grid`, `rail-line`, `rail-slot`, `rail-lead`). A pattern earns a place here once a second component wants it.
+**`src/styles/utilities.css`** holds the custom `@utility` blocks: `font-serif` (_overridden_ to carry font-feature-settings with the family), `micro-label`, `link-underline`, `hover-accent`, `theme-switching`, and the layout set (`page-shell`, `rail-grid`, `rail-line`, `rail-slot`, `rail-lead`). A pattern earns a place here once a second component wants it.
+
+**An `@utility` block cannot always beat a built-in.** `font-serif` overrides cleanly because Tailwind generates it from `--font-serif`, so redefining the token redefines the utility. `max-w-prose` does **not**: v4 ships it as a static `65ch` rule outside the `--container-*` scale, and an `@utility max-w-prose` is merged _into_ that same rule with the built-in `65ch` last, so it silently loses. That is why running copy uses **`max-w-measure`** (from `--container-measure`) — a name Tailwind does not already own generates cleanly and simply wins. Check the compiled CSS before assuming an override took: `grep -A3 'max-w-' out/_next/static/**/*.css`.
 
 **`hover-accent` is the page's only hover treatment.** Nothing lifts, translates, or casts a shadow — with no cards there is nothing to raise, so hover is a colour change and a border tint, matching the reference's `.cactus-link`. Use `hover-accent` rather than writing a new `hover:text-accent`, so everything responds identically.
 
@@ -272,34 +277,140 @@ const WARM = { "--accent": "var(--accent-warm)" } as CSSProperties;
 
 ### Typography — two voices, seven sizes
 
-| Family        | Token          | Used for                            |
-| ------------- | -------------- | ----------------------------------- |
-| System mono   | `--font-mono`  | everything. **The `body` default.** |
-| DM Serif Text | `--font-serif` | section headings and entry titles   |
+| Family            | Token            | Used for                            |
+| ----------------- | ---------------- | ----------------------------------- |
+| System mono       | `--font-mono`    | everything. **The `body` default.** |
+| DM Serif Text     | `--font-serif`   | section headings and entry titles   |
+| Space Grotesk 700 | `--font-display` | the hero name, and nothing else     |
 
-**Mono is the body voice and it costs nothing** — `ui-monospace, SFMono-Regular, Menlo, …`, resolved from the system. DM Serif Text is the only downloaded face, and `next/font` self-hosts it. Before adding a family back, price it.
+**Mono is the body voice and it costs nothing** — `ui-monospace, SFMono-Regular, Menlo, …`, resolved from the system. The other two are downloaded, self-hosted by `next/font`. Before adding a fourth, price it.
+
+**Three families for one page is the ceiling, and the third one earns it by a hair.** Space Grotesk exists to give the first thing a visitor reads a voice that is neither the body mono nor the heading serif. It ships one weight, is used on one element, and `unicode-range` means only the latin subset is actually fetched — **12.8 KB over the wire**, of the 29.1 KB the three subsets occupy in `out/`. Widen its usage and that arithmetic stops holding.
 
 **Seven fixed sizes, no `clamp()`, no `sm:text-*`.** One class per element, and it should stay that way.
 
-| token            | px   | used by                                        |
-| ---------------- | ---- | ---------------------------------------------- |
-| `--text-nano`    | 11px | rail numbers                                   |
-| `--text-micro`   | 12px | uppercase labels, dates, nav, tech lines       |
-| `--text-prose`   | 14px | body copy. The `body` default.                 |
-| `--text-lead`    | 16px | entry titles, the nav brand                    |
-| `--text-title`   | 20px | the nav brand, hero role line, Results metrics |
-| `--text-section` | 24px | every section heading                          |
-| `--text-display` | 28px | the hero name (mono bold), nothing else        |
+| token            | px   | used by                                         |
+| ---------------- | ---- | ----------------------------------------------- |
+| `--text-nano`    | 11px | rail numbers                                    |
+| `--text-micro`   | 12px | uppercase labels, dates, nav, tech lines        |
+| `--text-prose`   | 14px | body copy. The `body` default.                  |
+| `--text-lead`    | 16px | entry titles                                    |
+| `--text-title`   | 20px | the nav brand, hero role line, Results metrics  |
+| `--text-section` | 24px | every section heading                           |
+| `--text-display` | 32px | the hero name (Space Grotesk 700), nothing else |
 
-**28px is the ceiling and it is the point.** The reference tops out at 24px with `h1`–`h6` reset to `font-size: inherit`, and the restraint is most of why it reads the way it does. Two rounds were already spent bringing a fluid scale down from 83px to 50px; do not drift back up.
+**32px is the ceiling and it is the point.** The reference tops out at 24px with `h1`–`h6` reset to `font-size: inherit`, and the restraint is most of why it reads the way it does. Two rounds were already spent bringing a fluid scale down from 83px to 50px; do not drift back up. The hero name's `font-bold` is a **real** weight — `layout.tsx` downloads Space Grotesk 700. Anything set in `--font-serif` must not carry `font-bold`: DM Serif Text ships 400 only, so a weight class there synthesises a fake bold rather than loading one.
 
 **To make a step fluid again**, swap its value for `clamp(min, intercept + slope·vw, max)` where `slope = (max − min) / 1065 × 100` and `intercept = (min − slope/100 × 375) / 16`, with min/max in px and the results in rem. That is the Utopia method across a 375 → 1440px viewport, precomputed rather than derived at runtime.
 
 Line-height travels with each step as `--text-*--line-height`. Headings carry `text-balance` so a wrapped headline breaks into even lines rather than leaving one orphaned word.
 
+### The intro
+
+The page assembles itself on load. There is **no splash, no overlay and no
+spinner** — this is a static export, so nothing is genuinely loading and a
+progress indicator would be theatre. A full-screen greeting is also the exact
+character the Cactus pass removed when it deleted the old `intro-veil.tsx`; this
+is deliberately not a revival of that.
+
+What runs instead is one ~1.3s gesture assembled from the motifs the page
+already owns: **the torii strokes itself in, the rail descends out of it, and
+the hero's four lines arrive underneath.** The intro itself costs **299 bytes gzipped and zero JavaScript** (measured: CSS 6564 → 6863 gz, JS unchanged at 646,976). The scroll reveal below adds the only JavaScript in this feature.
+
+It lives almost entirely in the intro block at the bottom of
+`styles/utilities.css` — four utilities (`intro-lift`, `intro-mark`,
+`intro-rail`, `intro-node`, plus `intro-stagger`) over four keyframes. Only five
+lines of TSX opt into it:
+
+| Where         | What                                                                                                   |
+| ------------- | ------------------------------------------------------------------------------------------------------ |
+| `nav.tsx`     | `intro-lift` on `<nav>`, `intro-mark` on the `BrandMark`                                               |
+| `rail.tsx`    | an `intro` prop → `intro-rail` on the line, `intro-node` on the marker, `intro-stagger` on the content |
+| `hero.tsx`    | `<RailRow intro>`                                                                                      |
+| `diagram.tsx` | `pathLength="1"` on all five paths                                                                     |
+
+Four things here are load-bearing:
+
+- **The start state lives inside the keyframe, never on the element.** Every
+  animation declares only `from`, and `animation-fill-mode: backwards` holds
+  that frame through the delay. Nothing is ever set to `opacity: 0` in a base
+  rule, so a stylesheet that fails to arrive yields a plain page rather than a
+  blank one. Do not "make it explicit" by lifting those into the element — that
+  edit turns a slow network into an invisible portfolio.
+- **`pathLength="1"` is what makes one keyframe draw five strokes.** It
+  normalises each path to a single unit so a shared `stroke-dashoffset: 1`
+  works regardless of a stroke's real length. It changes no geometry and does
+  nothing when the animation is not running, so `public/favicon.svg` does not
+  need it.
+- **Only the hero's `RailRow` passes `intro`.** Every row would animate
+  identically, but the rest are far below the fold while it plays, so animating
+  them is motion nobody sees.
+- **The reduced-motion block in `base.css` collapses `animation-delay` as well
+  as `animation-duration`.** Both are required. With the delays left alone, a
+  reader who asked for stillness gets a blank page for the length of the longest
+  delay and then a snap — worse than the animation. That is why the rule is
+  there; do not prune it as redundant.
+
+Timings overlap on purpose — header 0s, mark 0.22s, rail 0.38s, hero 0.45s. A
+strictly sequential version reads as a machine taking its turns. The overlap is
+what makes it one movement.
+
+The rail **node** is included (`intro-node`) because without it the numbered
+marker is the one element with nothing to attach to: a lone circle sitting in
+empty space for the full 0.38s before the line reaches it, which reads as a
+rendering fault. It fades rather than rises — a translate on an 8px circle only
+advertises it moving back into place.
+
+#### The scroll reveal
+
+The intro alone left a seam. **The About section starts at 584px on every
+viewport measured — 1440x780, 1920x1080, 390x844 — so it is never below the
+fold.** It sat fully painted and motionless while the hero assembled above it,
+which read as a broken animation rather than a restrained one. Measure before
+assuming a section is below the fold; an earlier draft of this file asserted it
+was, and was wrong.
+
+So `components/reveal.tsx` — the THIRD client component — reveals each
+`[data-reveal]` block as it enters view, on the same `intro-rise` curve. It is
+one `IntersectionObserver` over every marked block, renders `null`, and holds no
+state; the sections themselves stay Server Components. Cost: **+766 bytes of JS,
++72 bytes gzipped CSS, and a 212-byte inline script.**
+
+`data-reveal` goes on the **content column**, via `RailRow`'s `reveal` prop —
+NOT on the `<section>`. The hairline is a child of the section, so fading whole
+sections would break the rail into per-section patches at the boundaries. Only
+the content moves; the spine stays continuous.
+
+**The safety argument is the important part of this feature.** Hiding content is
+the dangerous half of a scroll reveal: if the hidden state were a plain CSS rule,
+then JavaScript disabled, a bundle that 404s, or a hydration error would each
+leave a permanently blank portfolio. Two mechanisms prevent that, and **neither
+is optional**:
+
+1. The hidden rule in `base.css` is scoped to `.reveal-armed`, and that class is
+   only ever added by `lib/reveal.ts`, a blocking inline script. **No script, no
+   hiding.** Do not simplify the selector to a bare `[data-reveal]`.
+2. That same script drops the class again after 2.5s. If `Reveal` never mounts,
+   the page unhides itself. `Reveal` cancels the timer via `__revealHold` on
+   mount, so it never fires on a healthy page.
+
+Reduced motion is handled in the component, not in CSS: the hidden state is a
+plain rule rather than an animation, so the `prefers-reduced-motion` block in
+`base.css` cannot undo it. That branch reveals everything at once and drops
+`reveal-armed`. It is the only thing between those readers and a blank page.
+
+All four failure modes were verified in a real browser — normal load, JS
+disabled, bundle blocked, reduced motion — 18 assertions. Re-run them if you
+touch any of this.
+
+Blocks already on screen at load are staggered from 900ms, where the hero's own
+stagger is finishing, so the page reads as one movement. Anything scrolled to
+later arrives with **no** delay — a delay you have to sit through after
+scrolling reads as lag, not choreography.
+
 ### Performance constraints worth preserving
 
-- **Fonts.** `layout.tsx` requests exactly one family through `next/font/google`: DM Serif Text 400 + 400 italic. It is **self-hosted at build time**, so there is no `fonts.googleapis.com` stylesheet, no `preconnect` pair, and no render-blocking third-party round trip — all of which the previous build carried. next/font also emits a metric-adjusted `DM Serif Text Fallback`, which is why the computed fallback stack shows two names. Adding a weight to that call without using it costs a download for nothing.
+- **Fonts.** `layout.tsx` requests two families through `next/font/google`: DM Serif Text 400 + 400 italic, and Space Grotesk 700. Both are **self-hosted at build time**, so there is no `fonts.googleapis.com` stylesheet, no `preconnect` pair, and no render-blocking third-party round trip — all of which the previous build carried. next/font also emits a metric-adjusted `… Fallback` face per family, which is why each computed fallback stack shows two names. Adding a weight or style to either call without using it costs a download for nothing. `out/` holds seven `.woff2` files totalling 77,848 bytes, but `unicode-range` gates them: a latin-only visitor fetches the two latin subsets, not all seven.
 - Body text is the system mono stack and downloads nothing.
 - `page.tsx` emits a single JSON-LD `@graph` (Person + WebSite), not two script tags.
 - The bundle carries no data-fetching library, no chart library, and one Radix primitive. Keep it that way unless something on the page actually needs it.

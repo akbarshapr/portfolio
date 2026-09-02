@@ -27,6 +27,25 @@
     color: var(--accent-foreground);
   }
 
+  /*
+   * Scroll reveal — the hidden half. `reveal-armed` is put on <html> by
+   * lib/reveal.ts BEFORE first paint, so this rule can only ever apply when
+   * JavaScript is running to undo it. With JS off, or the bundle missing,
+   * nothing is hidden and the page renders in full. That gating is the whole
+   * safety argument; do not simplify this selector down to `[data-reveal]`.
+   *
+   * The hidden state must match the `from` frame of intro-rise EXACTLY, or the
+   * block jumps at the instant the animation takes over from it.
+   */
+  .reveal-armed [data-reveal]:not([data-reveal="shown"]) {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+
+  [data-reveal="shown"] {
+    animation: intro-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms) backwards;
+  }
+
   /* Reaches CSS animations only — SMIL and JS motion each need their own check. */
   @media (prefers-reduced-motion: reduce) {
     html {
@@ -39,6 +58,14 @@
       animation-duration: 0.01ms !important;
       animation-iteration-count: 1 !important;
       transition-duration: 0.01ms !important;
+      /*
+       * The delay matters as much as the duration. The intro utilities hold
+       * their opening frame through `animation-delay` with fill-mode
+       * backwards, so collapsing only the duration would still leave the page
+       * blank for the length of the longest delay before snapping in. Stillness
+       * means arriving already there, not arriving instantly but late.
+       */
+      animation-delay: 0.01ms !important;
     }
   }
 }

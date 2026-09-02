@@ -1,31 +1,49 @@
 import type { Metadata, Viewport } from "next";
-import { DM_Serif_Text } from "next/font/google";
+import { DM_Serif_Text, Space_Grotesk } from "next/font/google";
 import type { ReactNode } from "react";
 
 import { OG_BASE } from "@/lib/metadata";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/site";
+import { revealInitScript } from "@/lib/reveal";
 import { themeInitScript } from "@/lib/theme";
 import "@/styles.css";
 
 /*
- * The ONE downloaded face: DM Serif Text 400 + 400 italic, for the section
- * headings and the italic accent word. Body text is the system mono stack and
- * downloads nothing.
+ * TWO downloaded faces, and that is the whole budget. Body text is the system
+ * mono stack and downloads nothing.
  *
- * next/font self-hosts the file at build time and inlines its @font-face. That
- * is why there are no <link rel="preconnect"> tags to fonts.googleapis.com /
+ * next/font self-hosts both at build time and inlines their @font-face. That is
+ * why there are no <link rel="preconnect"> tags to fonts.googleapis.com /
  * fonts.gstatic.com any more, and no render-blocking stylesheet request: the
- * font is served from our own origin. Adding a weight here that nothing uses
- * costs a download for nothing.
+ * fonts are served from our own origin. Adding a weight or a style that nothing
+ * uses costs a download for nothing — each of these is used, and only just.
  *
- * `variable` exposes it as --font-dm-serif, which styles/tokens.css reads.
+ * `variable` exposes each as a custom property that styles/tokens.css reads.
  */
+
+/* Section headings and the italic accent word. 400 is all it ships. */
 const dmSerifText = DM_Serif_Text({
   weight: "400",
   style: ["normal", "italic"],
   subsets: ["latin"],
   display: "swap",
   variable: "--font-dm-serif",
+});
+
+/*
+ * The hero name, and NOTHING else — one word, one weight. It earns the download
+ * by being the first thing on the page: a geometric grotesque sits better
+ * against a monospace body than a neutral like Inter, and it keeps the name out
+ * of the serif that the section headings own.
+ *
+ * If this ever needs to go, `font-display` falls back to the system sans stack
+ * declared alongside it in tokens.css and the page still reads correctly.
+ */
+const spaceGrotesk = Space_Grotesk({
+  weight: "700",
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-space-grotesk",
 });
 
 export const metadata: Metadata = {
@@ -71,7 +89,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
      * server and client markup differ on className BY DESIGN. It is scoped to
      * this one element and does not reach anything inside.
      */
-    <html lang="en" className={dmSerifText.variable} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${dmSerifText.variable} ${spaceGrotesk.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         {/*
           Must run before first paint. Without it the export always ships the
@@ -80,6 +102,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           execute ahead of React, so it cannot be a component.
         */}
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+
+        {/*
+          Arms the scroll reveal. It must also run before first paint, or the
+          sections paint once at full opacity and are then hidden — a flash of
+          content, which is worse than no animation. See lib/reveal.ts for why
+          the hidden state is gated on this class rather than written plainly.
+        */}
+        <script dangerouslySetInnerHTML={{ __html: revealInitScript }} />
       </head>
       <body>{children}</body>
     </html>

@@ -29,6 +29,13 @@ const getSnapshot = (): Theme => (root().classList.contains("dark") ? "dark" : "
 // first client render agree. The observer corrects it immediately afterwards.
 const getServerSnapshot = (): Theme => "light";
 
+// Module scope, because there is one toggle and one <html>. Holds the handle
+// that takes the crossfade class back off again.
+let fadeTimer: number | undefined;
+
+/** Matches the duration in the `theme-switching` utility, plus a little slack. */
+const FADE_MS = 400;
+
 export function ThemeToggle() {
   const theme = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const next: Theme = theme === "dark" ? "light" : "dark";
@@ -38,8 +45,20 @@ export function ThemeToggle() {
       type="button"
       aria-label={`Switch to ${next} mode`}
       onClick={() => {
+        const el = root();
+
+        // Arm the crossfade BEFORE flipping the palette: a transition only runs
+        // if the property is already declared when the value changes. Both
+        // class writes land in the same style recalculation, so this is one
+        // frame, not two. The class comes off again afterwards — leaving a
+        // standing transition on every element would drag every hover and
+        // focus change through it too.
+        el.classList.add("theme-switching");
+        window.clearTimeout(fadeTimer);
+        fadeTimer = window.setTimeout(() => el.classList.remove("theme-switching"), FADE_MS);
+
         // Mutating the class is what drives the re-render, via the observer.
-        root().classList.toggle("dark", next === "dark");
+        el.classList.toggle("dark", next === "dark");
 
         // Persistence happens HERE and nowhere else, on purpose. Writing
         // localStorage on mount would pin a visitor who never touched the
@@ -52,12 +71,12 @@ export function ThemeToggle() {
           // page view, it just won't be remembered.
         }
       }}
-      className="hover-accent inline-flex h-8 w-8 items-center justify-center rounded text-muted-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="hover-accent inline-flex h-10 w-10 items-center justify-center rounded text-muted-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
     >
       {theme === "dark" ? (
-        <Sun className="h-4 w-4" aria-hidden />
+        <Sun className="h-5 w-5" aria-hidden />
       ) : (
-        <Moon className="h-4 w-4" aria-hidden />
+        <Moon className="h-5 w-5" aria-hidden />
       )}
     </button>
   );

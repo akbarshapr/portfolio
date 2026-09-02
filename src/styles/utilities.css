@@ -98,3 +98,188 @@
     border-color: color-mix(in oklch, var(--accent) 55%, transparent);
   }
 }
+
+/*
+ * The theme crossfade. components/theme-toggle.tsx puts this on <html> for
+ * ~400ms around the `.dark` flip, so the palette eases across instead of
+ * cutting. It is a class rather than a standing rule on `*` precisely because a
+ * permanent transition would also drag every hover and focus change through it.
+ *
+ * Specificity is doing the work, not !important: `.theme-switching *` is
+ * (0,1,1) and beats hover-accent's own transition at (0,1,0) inside the same
+ * utilities layer, so links crossfade with everything else rather than snapping.
+ *
+ * Reduced motion is already covered — the block in base.css collapses
+ * transition-duration with !important, and an important declaration in an
+ * earlier cascade layer outranks a later one.
+ */
+@utility theme-switching {
+  &,
+  & *,
+  & *::before,
+  & *::after {
+    transition:
+      background-color 0.35s ease,
+      border-color 0.35s ease,
+      color 0.35s ease,
+      fill 0.35s ease,
+      stroke 0.35s ease;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * The intro
+ *
+ * The page assembles itself instead of hiding behind a splash. This is a static
+ * export — nothing is genuinely loading — so a spinner or a progress count
+ * would be theatre, and a full-screen greeting is precisely the character the
+ * Cactus pass removed. What runs instead is one gesture built from the two
+ * motifs the page already owns: the gateway strokes itself in, the rail
+ * descends out of it, and the hero's lines arrive underneath.
+ *
+ * Three rules hold it up, and breaking any of them costs more than the
+ * animation is worth.
+ *
+ * 1. THE START STATE LIVES INSIDE THE KEYFRAME, never on the element. Every
+ *    animation here declares only `from`, and `animation-fill-mode: backwards`
+ *    holds that frame through the delay. So if this stylesheet fails to arrive,
+ *    nothing has been set to opacity 0 and the page renders plainly rather than
+ *    invisibly. Never lift these into a base rule "to be explicit" — that is
+ *    the edit that turns a slow network into a blank page.
+ * 2. ONLY opacity, transform and stroke-dashoffset animate. All three are
+ *    compositor-only: no layout is read or written, every element occupies its
+ *    final box from the first frame, and the text is in the HTML throughout —
+ *    so a crawler's view is unaffected and LCP moves only by the hero's delay.
+ * 3. NO JAVASCRIPT. Nothing mounts late and nothing is deferred; this is only
+ *    how finished markup is revealed. It costs zero bytes of script and leaves
+ *    the two-of-eighteen client component split exactly where it was.
+ *
+ * The timings overlap on purpose — header 0s, mark 0.22s, rail 0.38s, hero
+ * 0.45s. A strictly sequential version reads as a machine taking its turns; the
+ * overlap is what makes it read as a single movement. Total run is ~1.3s.
+ *
+ * The reduced-motion block in base.css collapses durations AND delays. Both are
+ * required: leave the delays alone and a reader who asked for stillness gets a
+ * blank page for the length of the longest one instead of a still page.
+ */
+
+@keyframes intro-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem);
+  }
+}
+
+@keyframes intro-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes intro-descend {
+  from {
+    transform: scaleY(0);
+  }
+}
+
+/*
+ * One offset draws every stroke whatever its real length, because the paths
+ * carry pathLength="1" — see the note in diagram.tsx.
+ */
+@keyframes intro-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+}
+
+/* A single element arriving on the shared curve. The header uses it. */
+@utility intro-lift {
+  animation: intro-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+/*
+ * The gateway builds from the ground up — uprights, then the tie beam, the
+ * strut, and the lintel landing last. The delays therefore run against source
+ * order, which lists the mark top-down.
+ */
+@utility intro-mark {
+  & path {
+    stroke-dasharray: 1;
+    animation: intro-draw 0.6s ease-out backwards;
+  }
+
+  /* kasagi — the lintel, last to land */
+  & path:nth-of-type(1) {
+    animation-delay: 0.53s;
+  }
+
+  /* nuki — the tie beam */
+  & path:nth-of-type(2) {
+    animation-delay: 0.41s;
+  }
+
+  /* gakuzuka — the strut */
+  & path:nth-of-type(3) {
+    animation-delay: 0.47s;
+  }
+
+  /* hashira — both uprights together, the foundation */
+  & path:nth-of-type(4),
+  & path:nth-of-type(5) {
+    animation-delay: 0.22s;
+  }
+}
+
+/*
+ * The hairline running down out of the mark. ONLY the hero's line carries this.
+ * Every section's line would animate identically, but the rest are far below
+ * the fold while it plays, so animating them is motion nobody sees.
+ */
+@utility intro-rail {
+  transform-origin: top;
+  animation: intro-descend 0.7s cubic-bezier(0.65, 0, 0.35, 1) 0.38s backwards;
+}
+
+/*
+ * The node on the rail, timed to land just after the descending line has run
+ * past it. Without this it is the one element with nothing to attach to — a
+ * lone circle sitting in empty space for the whole 0.38s before the line
+ * arrives, which reads as a rendering fault rather than as a pause. It fades
+ * rather than rises: the node is centred on the hairline, and a translate on a
+ * 8px circle only draws attention to it coming back into place.
+ */
+@utility intro-node {
+  animation: intro-fade 0.4s ease-out 0.52s backwards;
+}
+
+/*
+ * Staggers a container's direct children in. Six steps is the whole budget:
+ * past that the last element lands late enough to read as a bug rather than as
+ * choreography. The hero has four.
+ */
+@utility intro-stagger {
+  & > * {
+    animation: intro-rise 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    animation-delay: calc(0.45s + var(--intro-step, 0s));
+  }
+
+  & > *:nth-child(2) {
+    --intro-step: 0.07s;
+  }
+
+  & > *:nth-child(3) {
+    --intro-step: 0.16s;
+  }
+
+  & > *:nth-child(4) {
+    --intro-step: 0.23s;
+  }
+
+  & > *:nth-child(5) {
+    --intro-step: 0.3s;
+  }
+
+  & > *:nth-child(6) {
+    --intro-step: 0.37s;
+  }
+}
