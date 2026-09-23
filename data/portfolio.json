@@ -1,0 +1,143 @@
+{
+  "name": "Akbar Sha",
+  "title": "Software Developer",
+  "availability": "Available for work",
+  "contactForm": {
+    "accessKey": "bd2f526f-16bd-40aa-97e6-ce6cc04419ae"
+  },
+  "intro": "I like turning ideas into things that actually work. I build software, solve tricky problems, connect systems, and occasionally wonder why the code worked five minutes ago. Most importantly, I enjoy what I do.",
+  "email": "akbarshapr@gmail.com",
+  "avatar": "/avatar.jpg",
+  "portrait": "/portrait-placeholder.svg",
+  "social": {
+    "github": "https://github.com/akbarshapr",
+    "linkedin": "https://www.linkedin.com/in/akbarshapr",
+    "email": "mailto:akbarshapr@gmail.com"
+  },
+  "handles": {
+    "github": "@akbarshapr",
+    "linkedin": "in/akbarshapr"
+  },
+  "about": [
+    "Hi, I’m Akbar Sha. I’m a software developer with 3+ years of experience developing, designing, and implementing solutions across different platforms and technologies. At Tryzens Global, I have worked on storefront features, third-party integrations, design implementations, API development, and integrations for various enterprise clients across Salesforce B2C Commerce and MuleSoft platforms. I have earned certifications in Salesforce B2C Commerce, MuleSoft, and Agentforce. I love to code, research, and learn.",
+    "Outside of work, I enjoy watching movies, TV shows, and anime, following football, and spending time with friends and family."
+  ],
+  "skills": [
+    {
+      "category": "Platforms",
+      "items": ["Salesforce B2C Commerce", "MuleSoft"]
+    },
+    {
+      "category": "Languages",
+      "items": ["JavaScript", "TypeScript", "Python"]
+    },
+    {
+      "category": "Frameworks & Libraries",
+      "items": ["React", "Next.js", "Node.js", "Bootstrap", "Tailwind CSS"]
+    },
+    {
+      "category": "Tools & Practice",
+      "items": ["Anypoint Platform", "Git", "Postman", "SQL", "Agile / Scrum"]
+    }
+  ],
+  "experience": [
+    {
+      "role": "Software Developer",
+      "company": "Tryzens Global",
+      "period": "July 2023 — Present",
+      "contributions": [
+        "Delivered SFCC storefront features across multiple enterprise clients — product pages, promotions, checkout flows, and payment integrations.",
+        "Integrated loyalty and marketing platforms, and configured SFCC jobs, services, and API endpoints to automate business processes.",
+        "Architected MuleSoft integrations connecting Adobe Commerce, OMS, and third-party systems for inventory, catalog, tax, and shipping workflows.",
+        "Built React components for headless commerce projects, turning client designs into responsive, reusable storefronts.",
+        "Focused on stable, defect-free delivery, maintaining a sub-5% post-release defect rate across client engagements."
+      ]
+    },
+    {
+      "role": "Software Developer Intern",
+      "company": "Luminar Technolab",
+      "period": "Oct 2022 — May 2023",
+      "contributions": [
+        "Full-stack internship in Python and Django, building an e-commerce application and several CRUD web apps.",
+        "Earned the Python Web Development Expert certification through project-based learning."
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Enterprise checkout rebuild",
+      "blurb": "Re-architected the payment and promotions flow for a high-traffic SFCC storefront, cutting checkout drop-off and landing sub-5% post-release defects.",
+      "tags": ["SFCC", "SCAPI", "ISML"],
+      "linkLabel": "Live"
+    },
+    {
+      "title": "MuleSoft integration layer",
+      "blurb": "Connected Adobe Commerce, OMS, and third-party systems for inventory, catalog, tax, and shipping — one resilient integration fabric.",
+      "tags": ["MuleSoft", "Anypoint", "REST"],
+      "linkLabel": "Case study"
+    }
+  ],
+  "education": [
+    {
+      "institution": "Ilahia College of Arts and Science",
+      "credential": "Bachelor of Computer Applications",
+      "status": "2019 — 2022",
+      "highlights": [],
+      "location": "Muvattupuzha, Ernakulam, Kerala",
+      "university": "Mahatma Gandhi University"
+    }
+  ],
+  "certs": [
+    {
+      "name": "Salesforce Certified B2C Commerce Developer",
+      "issuer": "Salesforce",
+      "logo": "/logo-salesforce.svg",
+      "description": "Credentialed for building and customizing Salesforce B2C Commerce (SFCC) solutions."
+    },
+    {
+      "name": "Salesforce Certified MuleSoft Developer",
+      "issuer": "Salesforce",
+      "logo": "/logo-salesforce.svg",
+      "description": "Credentialed for designing and building integration solutions using MuleSoft (Mule 4)."
+    },
+    {
+      "name": "Salesforce Certified Agentforce Specialist",
+      "issuer": "Salesforce",
+      "logo": "/logo-salesforce.svg",
+      "description": "Credentialed for building and configuring Agentforce solutions on the Salesforce platform."
+    },
+    {
+      "name": "Python Web Development Expert",
+      "issuer": "National Council for Technology and Training",
+      "description": "Certified in Python web development with a focus on building dynamic web applications."
+    }
+  ],
+  "wins": [
+    {
+      "category": "Delivery",
+      "metric": "<5%",
+      "label": "Post-release defect rate",
+      "body": "Maintained across sprints and client engagements covering product pages, promotions, checkout flows, and payment integrations."
+    },
+    {
+      "category": "Scale",
+      "metric": "5–6",
+      "label": "Storefronts delivered",
+      "body": "SFCC SFRA solutions designed and delivered across three enterprise clients."
+    },
+    {
+      "category": "Integration",
+      "metric": "3–4",
+      "label": "MuleSoft OMS builds",
+      "body": "Major integration builds connecting Adobe Commerce, NewStore, AP21, 3PL, Edicom, and Avalara across end-to-end order management workflows."
+    }
+  ],
+  "worklog": [],
+  "personalSite": {
+    "url": "#",
+    "label": "Personal diary",
+    "blurb": "A look at life outside code — clicks, hobbies & everything else."
+  },
+  "contactIntro": "I'm always open to discussing new opportunities, interesting ideas, or just a friendly chat. Feel free to reach out — I'll get back to you as soon as possible.",
+  "contactQuote": "Good ideas start with a conversation."
+}
