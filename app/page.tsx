@@ -1,4 +1,5 @@
 import { getPortfolio } from "@/lib/portfolio";
+import Container from "@/components/ui/Container";
 import {
   About,
   Certifications,
@@ -17,8 +18,10 @@ export default async function Home() {
   const data = await getPortfolio();
 
   return (
-    <main className="mx-auto w-full max-w-4xl px-4 sm:px-6">
-      <Hero data={data} />
+    <main>
+      <Container>
+        <Hero data={data} />
+      </Container>
       <About paragraphs={data.about} />
       <Wins wins={data.wins} />
       <Skills skills={data.skills} />
@@ -27,9 +30,11 @@ export default async function Home() {
       <Certifications certs={data.certs} />
       <EducationList items={data.education} />
       <Contact data={data} />
-      <footer className="py-10 text-center text-sm text-foreground/50">
-        © {new Date().getFullYear()} {data.name}
-      </footer>
+      <Container>
+        <footer className="py-10 text-center text-sm text-muted">
+          © {new Date().getFullYear()} {data.name}
+        </footer>
+      </Container>
     </main>
   );
 }
