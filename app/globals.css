@@ -61,11 +61,24 @@
   --text-heading--line-height: 1.1;
   --text-display: clamp(3rem, 1rem + 8vw, 8rem);
   --text-display--line-height: 0.95;
+  /* Oversized name in the footer; sized to fit the container on one line. */
+  --text-giant: min(19vw, 14rem);
+  --text-giant--line-height: 0.8;
 
   --radius-card: 1.25rem;
 
   /* Vertical rhythm between page sections: `py-section`. */
   --spacing-section: clamp(4rem, 3rem + 5vw, 8rem);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 body {
@@ -76,4 +89,9 @@ body {
 ::selection {
   background: var(--accent);
   color: var(--accent-foreground);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
