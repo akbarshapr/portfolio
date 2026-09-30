@@ -20,24 +20,43 @@
   },
   "about": [
     "Hi, I’m Akbar Sha. I’m a software developer with 3+ years of experience developing, designing, and implementing solutions across different platforms and technologies. At Tryzens Global, I have worked on storefront features, third-party integrations, design implementations, API development, and integrations for various enterprise clients across Salesforce B2C Commerce and MuleSoft platforms. I have earned certifications in Salesforce B2C Commerce, MuleSoft, and Agentforce. I love to code, research, and learn.",
-    "Outside of work, I enjoy watching movies, TV shows, and anime, following football, and spending time with friends and family."
+    "Outside of work, I enjoy watching movies, TV shows, and anime, following football, and spending time with friends & family."
   ],
   "skills": [
     {
       "category": "Platforms",
-      "items": ["Salesforce B2C Commerce", "MuleSoft"]
+      "items": [
+        "Salesforce B2C Commerce",
+        "MuleSoft"
+      ]
     },
     {
       "category": "Languages",
-      "items": ["JavaScript", "TypeScript", "Python"]
+      "items": [
+        "JavaScript",
+        "TypeScript",
+        "Python"
+      ]
     },
     {
       "category": "Frameworks & Libraries",
-      "items": ["React", "Next.js", "Node.js", "Bootstrap", "Tailwind CSS"]
+      "items": [
+        "React",
+        "Next.js",
+        "Node.js",
+        "Bootstrap",
+        "Tailwind CSS"
+      ]
     },
     {
       "category": "Tools & Practice",
-      "items": ["Anypoint Platform", "Git", "Postman", "SQL", "Agile / Scrum"]
+      "items": [
+        "Anypoint Platform",
+        "Git",
+        "Postman",
+        "SQL",
+        "Agile / Scrum"
+      ]
     }
   ],
   "experience": [
@@ -67,13 +86,21 @@
     {
       "title": "Enterprise checkout rebuild",
       "blurb": "Re-architected the payment and promotions flow for a high-traffic SFCC storefront, cutting checkout drop-off and landing sub-5% post-release defects.",
-      "tags": ["SFCC", "SCAPI", "ISML"],
+      "tags": [
+        "SFCC",
+        "SCAPI",
+        "ISML"
+      ],
       "linkLabel": "Live"
     },
     {
       "title": "MuleSoft integration layer",
       "blurb": "Connected Adobe Commerce, OMS, and third-party systems for inventory, catalog, tax, and shipping — one resilient integration fabric.",
-      "tags": ["MuleSoft", "Anypoint", "REST"],
+      "tags": [
+        "MuleSoft",
+        "Anypoint",
+        "REST"
+      ],
       "linkLabel": "Case study"
     }
   ],
@@ -117,19 +144,19 @@
       "category": "Delivery",
       "metric": "<5%",
       "label": "Post-release defect rate",
-      "body": "Maintained across sprints and client engagements covering product pages, promotions, checkout flows, and payment integrations."
+      "body": "Consistently maintained across sprints and client engagements, covering product pages, promotions, checkout, and payment integrations."
     },
     {
       "category": "Scale",
       "metric": "5–6",
       "label": "Storefronts delivered",
-      "body": "SFCC SFRA solutions designed and delivered across three enterprise clients."
+      "body": "Designed and delivered Salesforce Commerce Cloud storefront solutions for multiple enterprise clients."
     },
     {
       "category": "Integration",
       "metric": "3–4",
-      "label": "MuleSoft OMS builds",
-      "body": "Major integration builds connecting Adobe Commerce, NewStore, AP21, 3PL, Edicom, and Avalara across end-to-end order management workflows."
+      "label": "MuleSoft OMS integrations",
+      "body": "Built end-to-end order management integrations connecting platforms including Adobe Commerce, NewStore, Avalara, and other enterprise systems."
     }
   ],
   "worklog": [],
